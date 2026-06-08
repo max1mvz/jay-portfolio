@@ -1,0 +1,552 @@
+# Decap CMS configuration
+# -----------------------------------------------------------------------------
+# LOCAL EDITING (now):
+#   1. Start the site:   start-website.bat        (serves http://localhost:4321)
+#   2. Start the CMS:    npx decap-server         (proxy on http://localhost:8081)
+#   3. Open:             http://localhost:4321/admin/
+#   `local_backend: true` makes the admin read/write your local files directly.
+#
+# GOING LIVE (later): push to GitHub, deploy on Netlify, enable Identity + Git
+# Gateway. The backend below is already set for that.
+# -----------------------------------------------------------------------------
+
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  # ------------------------------------------------------------------ Site info
+  - name: "site"
+    label: "Site & Contact"
+    files:
+      - name: "site"
+        label: "Site & Contact Info"
+        file: "data/site.json"
+        fields:
+          - { label: "Full name", name: "name", widget: "string" }
+          - { label: "Brand name (nav)", name: "brand", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone (display)", name: "phone", widget: "string" }
+          - { label: "Phone (tel: link)", name: "phoneHref", widget: "string", hint: "digits only, e.g. +639276053057" }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+
+  # ------------------------------------------------------------------- Home page
+  - name: "home"
+    label: "Home Page"
+    files:
+      - name: "home"
+        label: "Home Page Copy"
+        file: "data/home.json"
+        fields:
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Title lines (wrap a word in *stars* for italics)", name: "titleLines", widget: "list", field: { label: "Line", name: "line", widget: "string" } }
+              - { label: "Bio (HTML allowed)", name: "bio", widget: "text" }
+              - { label: "Scroll link label", name: "scrollLabel", widget: "string" }
+              - { label: "Credit line", name: "credit", widget: "string" }
+          - label: "About"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Section label", name: "label", widget: "string" }
+              - { label: "Statement (HTML allowed)", name: "statement", widget: "text" }
+              - { label: "Chart title", name: "chartTitle", widget: "string" }
+              - { label: "Chart trend", name: "chartTrend", widget: "string" }
+              - { label: "Body", name: "body", widget: "text" }
+              - label: "Stats"
+                name: "stats"
+                widget: "list"
+                fields:
+                  - { label: "Number", name: "num", widget: "string" }
+                  - { label: "Suffix (+ / %)", name: "suffix", widget: "string" }
+                  - { label: "Label", name: "label", widget: "string" }
+          - label: "Selected Work"
+            name: "work"
+            widget: "object"
+            fields:
+              - { label: "Section label", name: "label", widget: "string" }
+              - { label: "Title (HTML allowed)", name: "title", widget: "string" }
+              - { label: "Browse label", name: "browseLabel", widget: "string" }
+              - label: "Category cards"
+                name: "categories"
+                widget: "list"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "text" }
+          - label: "Services"
+            name: "services"
+            widget: "object"
+            fields:
+              - { label: "Section label", name: "label", widget: "string" }
+              - { label: "Title (HTML allowed)", name: "title", widget: "string" }
+              - label: "Items"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "text" }
+          - label: "Contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Title (HTML allowed)", name: "title", widget: "string" }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Tagline", name: "tagline", widget: "string" }
+
+  # ----------------------------------------------------------------- Storefronts
+  - name: "storefronts"
+    label: "Storefronts"
+    files:
+      - name: "storefronts"
+        label: "Storefronts"
+        file: "data/storefronts.json"
+        fields:
+          - label: "Page header"
+            name: "page"
+            widget: "object"
+            fields:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML allowed)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+          - label: "Storefronts"
+            name: "items"
+            label_singular: "Storefront"
+            widget: "list"
+            summary: "{{fields.index}}  ·  {{fields.name}}"
+            fields:
+              - { label: "Slug", name: "slug", widget: "string", hint: "lowercase id, e.g. ease" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Category / one-liner", name: "category", widget: "string" }
+              - { label: "Index label", name: "index", widget: "string", hint: "e.g. 01 — Amazon" }
+              - { label: "Tag", name: "tag", widget: "string", default: "Storefront" }
+              - { label: "Badge (feature card only)", name: "badge", widget: "string", required: false }
+              - { label: "Case study page", name: "page", widget: "string", required: false, hint: "e.g. ease.html — leave blank for a non-clickable tile" }
+              - { label: "Live store URL", name: "liveUrl", widget: "string", required: false }
+              - { label: "Cover image", name: "image", widget: "image", required: false }
+              - { label: "Monogram (used if no image)", name: "monogram", widget: "string", required: false }
+              - { label: "Gradient color 1", name: "grad1", widget: "string", required: false, default: "#3a4a6b" }
+              - { label: "Gradient color 2", name: "grad2", widget: "string", required: false, default: "#8aa0c8" }
+              - { label: "Featured (large card)", name: "featured", widget: "boolean", default: false }
+
+  # ------------------------------------------------------------------ A+ Content
+  - name: "aplus"
+    label: "A+ Content"
+    files:
+      - name: "aplus"
+        label: "A+ Content"
+        file: "data/aplus.json"
+        fields:
+          - label: "Page header"
+            name: "page"
+            widget: "object"
+            fields:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML allowed)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+          - label: "A+ projects"
+            name: "items"
+            label_singular: "A+ project"
+            widget: "list"
+            summary: "{{fields.index}}  ·  {{fields.name}}"
+            fields:
+              - { label: "Slug", name: "slug", widget: "string" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Category / one-liner", name: "category", widget: "string" }
+              - { label: "Index label", name: "index", widget: "string", hint: "e.g. 01 — Brand Story" }
+              - { label: "Tag", name: "tag", widget: "string", default: "A+ Content" }
+              - { label: "Badge (feature card only)", name: "badge", widget: "string", required: false }
+              - { label: "Case study page", name: "page", widget: "string", required: false, hint: "e.g. optiflow.html — leave blank for a placeholder tile" }
+              - { label: "Cover image", name: "image", widget: "image", required: false }
+              - { label: "Monogram (used if no image)", name: "monogram", widget: "string", required: false }
+              - { label: "Gradient color 1", name: "grad1", widget: "string", required: false, default: "#2f4a55" }
+              - { label: "Gradient color 2", name: "grad2", widget: "string", required: false, default: "#6fb3c9" }
+              - { label: "Featured (large card)", name: "featured", widget: "boolean", default: false }
+
+  # ---------------------------------------------------------------- Infographics
+  - name: "infographics"
+    label: "Infographics"
+    files:
+      - name: "infographics"
+        label: "Infographics"
+        file: "data/infographics.json"
+        fields:
+          - label: "Page header"
+            name: "page"
+            widget: "object"
+            fields:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML allowed)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+          - label: "Featured case-study card"
+            name: "featured"
+            widget: "object"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Category / one-liner", name: "category", widget: "string" }
+              - { label: "Index label", name: "index", widget: "string", default: "01 — Skincare" }
+              - { label: "Tag", name: "tag", widget: "string", default: "Infographics" }
+              - { label: "Badge", name: "badge", widget: "string", default: "Featured · Case study" }
+              - { label: "Case study page", name: "page", widget: "string", hint: "e.g. dermtheory.html" }
+              - { label: "Cover image", name: "image", widget: "image", required: false }
+              - { label: "Gradient color 1", name: "grad1", widget: "string", required: false, default: "#5a4a3a" }
+              - { label: "Gradient color 2", name: "grad2", widget: "string", required: false, default: "#c9a86a" }
+          - label: "Brand galleries"
+            name: "brands"
+            label_singular: "Brand"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Key", name: "key", widget: "string", hint: "unique id, e.g. mysalifree" }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Tag", name: "tag", widget: "string" }
+              - label: "Images"
+                name: "images"
+                label_singular: "Image"
+                widget: "list"
+                field: { label: "Image", name: "image", widget: "image" }
+
+  # ---------------------------------------------------------------- Case studies
+  - name: "case_studies"
+    label: "Case Studies"
+    files:
+      - name: "case_studies"
+        label: "Case Studies"
+        file: "data/case-studies.json"
+        fields:
+          - label: "Ease Healthcare (ease.html)"
+            name: "ease"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Back link"
+                name: "nav"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "backLabel", widget: "string" }
+                  - { label: "Href", name: "backHref", widget: "string" }
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML, e.g. Ease <em>Healthcare</em>)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+                  - { label: "Primary button label (blank hides it)", name: "primaryLabel", widget: "string", required: false }
+                  - { label: "Primary button URL", name: "primaryHref", widget: "string", required: false }
+                  - { label: "Ghost button label", name: "ghostLabel", widget: "string", required: false }
+                  - { label: "Ghost button URL", name: "ghostHref", widget: "string", required: false }
+              - label: "Meta"
+                name: "meta"
+                widget: "object"
+                fields:
+                  - { label: "Role", name: "role", widget: "string" }
+                  - { label: "Client", name: "client", widget: "string" }
+                  - { label: "Scope", name: "scope", widget: "string" }
+                  - { label: "Year", name: "year", widget: "string" }
+              - label: "Section 1 — Brief"
+                name: "brief"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section 2 — Idea"
+                name: "idea"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Anatomy (sticky image + notes)"
+                name: "anatomy"
+                widget: "object"
+                fields:
+                  - { label: "Section label", name: "label", widget: "string" }
+                  - { label: "Image", name: "image", widget: "image", required: false }
+                  - label: "Notes"
+                    name: "notes"
+                    widget: "list"
+                    fields:
+                      - { label: "Title", name: "title", widget: "string" }
+                      - { label: "Body", name: "body", widget: "text" }
+              - label: "Section — Outcome"
+                name: "outcome"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+
+          - label: "Optiflow (optiflow.html)"
+            name: "optiflow"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Back link"
+                name: "nav"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "backLabel", widget: "string" }
+                  - { label: "Href", name: "backHref", widget: "string" }
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+                  - { label: "Primary button label (blank hides it)", name: "primaryLabel", widget: "string", required: false }
+                  - { label: "Primary button URL", name: "primaryHref", widget: "string", required: false }
+                  - { label: "Ghost button label", name: "ghostLabel", widget: "string", required: false }
+                  - { label: "Ghost button URL", name: "ghostHref", widget: "string", required: false }
+              - label: "Meta"
+                name: "meta"
+                widget: "object"
+                fields:
+                  - { label: "Role", name: "role", widget: "string" }
+                  - { label: "Client", name: "client", widget: "string" }
+                  - { label: "Scope", name: "scope", widget: "string" }
+                  - { label: "Year", name: "year", widget: "string" }
+              - label: "Section 1 — Brief"
+                name: "brief"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section 2 — Idea"
+                name: "idea"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Anatomy (sticky image + notes)"
+                name: "anatomy"
+                widget: "object"
+                fields:
+                  - { label: "Section label", name: "label", widget: "string" }
+                  - { label: "Image", name: "image", widget: "image", required: false }
+                  - label: "Notes"
+                    name: "notes"
+                    widget: "list"
+                    fields:
+                      - { label: "Title", name: "title", widget: "string" }
+                      - { label: "Body", name: "body", widget: "text" }
+              - label: "Section — Outcome"
+                name: "outcome"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+
+          - label: "Dermtheory (dermtheory.html)"
+            name: "dermtheory"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Back link"
+                name: "nav"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "backLabel", widget: "string" }
+                  - { label: "Href", name: "backHref", widget: "string" }
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+                  - { label: "Primary button label (blank hides it)", name: "primaryLabel", widget: "string", required: false }
+                  - { label: "Primary button URL", name: "primaryHref", widget: "string", required: false }
+                  - { label: "Ghost button label", name: "ghostLabel", widget: "string", required: false }
+                  - { label: "Ghost button URL", name: "ghostHref", widget: "string", required: false }
+              - label: "Meta"
+                name: "meta"
+                widget: "object"
+                fields:
+                  - { label: "Role", name: "role", widget: "string" }
+                  - { label: "Client", name: "client", widget: "string" }
+                  - { label: "Scope", name: "scope", widget: "string" }
+                  - { label: "Year", name: "year", widget: "string" }
+              - label: "Section 1 — Brief"
+                name: "brief"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section 2 — Idea"
+                name: "idea"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Anatomy (image swaps per note)"
+                name: "anatomy"
+                widget: "object"
+                fields:
+                  - { label: "Section label", name: "label", widget: "string" }
+                  - { label: "Mode", name: "mode", widget: "hidden", default: "swap" }
+                  - { label: "Default / first image", name: "image", widget: "image", required: false }
+                  - label: "Notes (each has its own image)"
+                    name: "notes"
+                    widget: "list"
+                    fields:
+                      - { label: "Title", name: "title", widget: "string" }
+                      - { label: "Body", name: "body", widget: "text" }
+                      - { label: "Image", name: "image", widget: "image", required: false }
+              - label: "Section — Outcome"
+                name: "outcome"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+
+          - label: "Moonjax (moonjax.html)"
+            name: "moonjax"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Back link"
+                name: "nav"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "backLabel", widget: "string" }
+                  - { label: "Href", name: "backHref", widget: "string" }
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+                  - { label: "Primary button label (blank hides it)", name: "primaryLabel", widget: "string", required: false }
+                  - { label: "Primary button URL", name: "primaryHref", widget: "string", required: false }
+                  - { label: "Ghost button label", name: "ghostLabel", widget: "string", required: false }
+                  - { label: "Ghost button URL", name: "ghostHref", widget: "string", required: false }
+              - label: "Meta"
+                name: "meta"
+                widget: "object"
+                fields:
+                  - { label: "Role", name: "role", widget: "string" }
+                  - { label: "Client", name: "client", widget: "string" }
+                  - { label: "Scope", name: "scope", widget: "string" }
+                  - { label: "Year", name: "year", widget: "string" }
+              - label: "Section 1 — Brief"
+                name: "brief"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section 2 — Idea"
+                name: "idea"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section — Outcome"
+                name: "outcome"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+
+          - label: "Beemo (beemo.html)"
+            name: "beemo"
+            widget: "object"
+            collapsed: true
+            fields:
+              - label: "Back link"
+                name: "nav"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "backLabel", widget: "string" }
+                  - { label: "Href", name: "backHref", widget: "string" }
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string" }
+                  - { label: "Title (HTML)", name: "title", widget: "string" }
+                  - { label: "Lead", name: "lead", widget: "text" }
+                  - { label: "Primary button label (blank hides it)", name: "primaryLabel", widget: "string", required: false }
+                  - { label: "Primary button URL", name: "primaryHref", widget: "string", required: false }
+                  - { label: "Ghost button label", name: "ghostLabel", widget: "string", required: false }
+                  - { label: "Ghost button URL", name: "ghostHref", widget: "string", required: false }
+              - label: "Meta"
+                name: "meta"
+                widget: "object"
+                fields:
+                  - { label: "Role", name: "role", widget: "string" }
+                  - { label: "Client", name: "client", widget: "string" }
+                  - { label: "Scope", name: "scope", widget: "string" }
+                  - { label: "Year", name: "year", widget: "string" }
+              - label: "Section 1 — Brief"
+                name: "brief"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section 2 — Idea"
+                name: "idea"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Section — Outcome"
+                name: "outcome"
+                widget: "object"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Heading (HTML allowed)", name: "h2", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text" }
+                  - { label: "Paragraph 2", name: "p2", widget: "text" }

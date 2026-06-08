@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optiflow — Premium A+ Case Study · Jay Lovete</title>
+  <meta name="description" content="A breakdown of the Optiflow Amazon Premium A+ brand story — the brief, the idea, and the module-by-module design decisions behind a full-canvas, interactive detail page." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <link rel="stylesheet" href="css/case.css?v=11" />
+</head>
+<body>
+  <div class="bg-mesh" aria-hidden="true">
+    <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+  </div>
+  <div class="bg-grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <header class="case-nav">
+    <a href="aplus.html" class="case-nav__back" data-cursor data-cms-href="cs:optiflow.nav.backHref">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 2 4 8l6 6" stroke="currentColor" stroke-width="1.3"/></svg>
+      <span data-cms="cs:optiflow.nav.backLabel">A+ Content</span>
+    </a>
+    <a href="index.html" class="case-nav__brand" data-cursor>Jay Lovete</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="case-hero">
+    <p class="case-hero__eyebrow reveal" data-cms="cs:optiflow.hero.eyebrow">Amazon Premium A+ · Brand Story</p>
+    <h1 class="case-hero__title reveal" data-cms="cs:optiflow.hero.title">Opti<em>flow</em></h1>
+    <p class="case-hero__lead reveal" data-cms="cs:optiflow.hero.lead">
+      A Premium A+ brand story that uses Amazon's largest canvas to its full advantage — edge-to-edge visuals,
+      interactive hotspots and video that turn a detail page into an immersive, objection-proof experience.
+    </p>
+    <div class="case-hero__actions reveal">
+      <a class="btn btn--primary" data-cursor target="_blank" rel="noopener"
+         href="#" data-cms="cs:optiflow.hero.primaryLabel" data-cms-href="cs:optiflow.hero.primaryHref">View live ↗</a>
+      <a class="btn btn--ghost" data-cursor href="aplus.html"
+         data-cms="cs:optiflow.hero.ghostLabel" data-cms-href="cs:optiflow.hero.ghostHref">All A+ content</a>
+    </div>
+  </section>
+
+  <!-- META -->
+  <div class="case-meta reveal">
+    <div class="case-meta__item"><div class="k">Role</div><div class="v" data-cms="cs:optiflow.meta.role">Senior Graphic Designer</div></div>
+    <div class="case-meta__item"><div class="k">Client</div><div class="v" data-cms="cs:optiflow.meta.client">Optiflow</div></div>
+    <div class="case-meta__item"><div class="k">Scope</div><div class="v" data-cms="cs:optiflow.meta.scope">Premium A+ · Brand Story</div></div>
+    <div class="case-meta__item"><div class="k">Year</div><div class="v" data-cms="cs:optiflow.meta.year">2025</div></div>
+  </div>
+
+  <!-- OVERVIEW / WHY -->
+  <section class="case-section">
+    <div class="case-section__label reveal"><span>01</span> — <span data-cms="cs:optiflow.brief.label">The brief</span></div>
+    <div class="case-cols">
+      <h2 class="case-h2 reveal" data-cms="cs:optiflow.brief.h2">Why go <em>Premium.</em></h2>
+      <div class="case-body">
+        <p class="reveal" data-cms="cs:optiflow.brief.p1">Optiflow had earned the brand-registry status to unlock Premium A+ — Amazon's top content
+          tier — but a bigger canvas only helps if the design actually uses it. Standard modules dropped into a premium
+          slot just look like standard modules with more whitespace.</p>
+        <p class="reveal" data-cms="cs:optiflow.brief.p2">The brief was to build a true Premium experience: full-width imagery, interactive hotspots,
+          a hero video and a navigable comparison table — a detail page that feels less like a listing and more like a
+          flagship microsite living inside Amazon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IDEA -->
+  <section class="case-section">
+    <div class="case-section__label reveal"><span>02</span> — <span data-cms="cs:optiflow.idea.label">The idea</span></div>
+    <div class="case-cols">
+      <h2 class="case-h2 reveal" data-cms="cs:optiflow.idea.h2">The canvas <em>is</em> the message.</h2>
+      <div class="case-body">
+        <p class="reveal" data-cms="cs:optiflow.idea.p1">Premium A+ removes the gutters, so I designed edge-to-edge — letting imagery run full-bleed and
+          using scale itself to signal that Optiflow is a premium brand before a word is read.</p>
+        <p class="reveal" data-cms="cs:optiflow.idea.p2">Every premium-only module earns its place: hotspots reveal detail on demand, the video carries the
+          product in motion, and the comparison table lets shoppers self-select — so the page does the selling interactively
+          instead of asking anyone to read a wall of text.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANATOMY -->
+  <section class="anatomy">
+    <div class="case-section__label reveal" style="margin-bottom:2.5rem"><span>03</span> — <span data-cms="cs:optiflow.anatomy.label">Anatomy of the Premium A+ page</span></div>
+    <div class="anatomy__grid">
+      <div class="anatomy__visual">
+        <div class="anatomy__frame reveal">
+          <img id="bsImg" src="images/Optiflow.png" alt="Optiflow Amazon Premium A+ brand story design" data-cms-src="cs:optiflow.anatomy.image" />
+          <div class="anatomy__placeholder" id="bsPlaceholder">
+            <span class="mono">Optiflow</span>
+            <div>Drop your Premium A+ layout here as</div>
+            <code>images/Optiflow.png</code>
+          </div>
+          <div class="anatomy__step" aria-hidden="true"><b>01</b> <span>/ 06</span></div>
+        </div>
+      </div>
+
+      <div class="anatomy__notes">
+        <article class="note reveal"><div class="note__no">1</div>
+          <h3 class="note__title" data-cms="cs:optiflow.anatomy.notes.0.title">Full-bleed brand hero</h3>
+          <p class="note__body" data-cms="cs:optiflow.anatomy.notes.0.body">Premium A+ unlocks an edge-to-edge banner, so the page opens on a cinematic, full-width
+            statement of what Optiflow is and who it's for — scale doing the premium positioning before any copy.</p>
+        </article>
+        <article class="note reveal"><div class="note__no">2</div>
+          <h3 class="note__title" data-cms="cs:optiflow.anatomy.notes.1.title">Interactive hotspots</h3>
+          <p class="note__body" data-cms="cs:optiflow.anatomy.notes.1.body">A premium-only module where shoppers hover or tap points on the product to reveal feature
+            callouts. It turns a static spec list into exploration — answering "what does this do?" the moment it's asked.</p>
+        </article>
+        <article class="note reveal"><div class="note__no">3</div>
+          <h3 class="note__title" data-cms="cs:optiflow.anatomy.notes.2.title">Hero video</h3>
+          <p class="note__body" data-cms="cs:optiflow.anatomy.notes.2.body">An auto-playing video module — exclusive to Premium A+ — shows the product in motion and in
+            context. Seeing it work removes the doubt that still images leave behind.</p>
+        </article>
+        <article class="note reveal"><div class="note__no">4</div>
+          <h3 class="note__title" data-cms="cs:optiflow.anatomy.notes.3.title">Image carousel</h3>
+          <p class="note__body" data-cms="cs:optiflow.anatomy.notes.3.body">A swipeable gallery packs lifestyle shots, detail crops and use-cases into a single slot —
+            depth without forcing an endless scroll, and a layout that feels native on mobile.</p>
+        </article>
+        <article class="note reveal"><div class="note__no">5</div>
+          <h3 class="note__title" data-cms="cs:optiflow.anatomy.notes.4.title">Comparison table</h3>
+          <p class="note__body" data-cms="cs:optiflow.anatomy.notes.4.body">An enhanced cross-sell table maps the range side by side so a shopper can self-select the
+            right Optiflow for them — lifting basket size while genuinely helping them decide.</p>
+        </article>
+        <article class="note reveal"><div class="note__no">6</div>
+          <h3 class="note__title" data-cms="cs:optiflow.anatomy.notes.5.title">FAQ &amp; brand close</h3>
+          <p class="note__body" data-cms="cs:optiflow.anatomy.notes.5.body">An accordion FAQ pre-empts the last objections, then a closing brand panel loops the story
+            back to the promise in the hero — so the experience resolves instead of just ending.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH / OUTCOME -->
+  <section class="case-section">
+    <div class="case-section__label reveal"><span>04</span> — <span data-cms="cs:optiflow.outcome.label">The outcome</span></div>
+    <div class="case-cols">
+      <h2 class="case-h2 reveal" data-cms="cs:optiflow.outcome.h2">A flagship that <em>lives on Amazon.</em></h2>
+      <div class="case-body">
+        <p class="reveal" data-cms="cs:optiflow.outcome.p1">The finished Premium A+ story gives Optiflow a detail page with the polish of a standalone brand
+          site — interactive, full-canvas and built to convert the shoppers who research before they buy.</p>
+        <p class="reveal" data-cms="cs:optiflow.outcome.p2"><em>Add your results here</em> — e.g. conversion-rate uplift, engagement on the interactive modules,
+          or units sold once you have the numbers. Concrete outcomes make the strongest close to a case study.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="case-foot">
+    <span>© <span id="year"></span> Ernesto M. Lovete Jr.</span>
+    <a href="aplus.html" data-cursor>← Back to A+ content</a>
+  </footer>
+
+  <script>
+    // Show the placeholder only if the Premium A+ image is missing.
+    (function () {
+      var img = document.getElementById('bsImg');
+      var ph = document.getElementById('bsPlaceholder');
+      function showPlaceholder(){ img.style.display='none'; ph.style.display='grid'; }
+      function showImage(){ ph.style.display='none'; img.style.display='block'; }
+      img.style.display = 'none';
+      ph.style.display = 'none';
+      img.addEventListener('load', showImage);
+      img.addEventListener('error', showPlaceholder);
+      if (img.complete) { img.naturalWidth > 0 ? showImage() : showPlaceholder(); }
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+  <script src="js/content.js?v=2"></script>
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

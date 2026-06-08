@@ -1,0 +1,10 @@
+# Netlify configuration — static site, no build step.
+[build]
+  publish = "."
+  command = ""
+
+# Ensure the CMS config is served as YAML in production.
+[[headers]]
+  for = "/admin/config.yml"
+  [headers.values]
+    Content-Type = "text/yaml; charset=utf-8"

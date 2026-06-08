@@ -1,0 +1,90 @@
+{
+  "hero": {
+    "eyebrow": "Senior Graphic Designer · Amazon Brand Specialist",
+    "titleLines": [
+      "Design that",
+      "*converts* &",
+      "captivates."
+    ],
+    "bio": "I build <strong>scroll-stopping</strong> visual content for Amazon storefronts, A+ modules, and brand identities — turning browsers into buyers through design that drives <strong>engagement and revenue</strong>.",
+    "scrollLabel": "View selected work",
+    "credit": "Ernesto M. Lovete Jr. — Portfolio ’26"
+  },
+  "about": {
+    "label": "About",
+    "statement": "A graphic designer obsessed with visual content that <em>drives engagement</em> and <em>revenue</em> across the Amazon ecosystem.",
+    "chartTitle": "Engagement after redesign",
+    "chartTrend": "▲ Trending up",
+    "body": "I'm Jay — a senior graphic designer focused on building brand experiences that perform. From storefront architecture to scroll-stopping A+ modules, I bridge aesthetics and conversion to help brands stand out in a crowded marketplace.",
+    "stats": [
+      {
+        "num": "50",
+        "suffix": "+",
+        "label": "Brand storefronts"
+      },
+      {
+        "num": "300",
+        "suffix": "+",
+        "label": "A+ content projects"
+      },
+      {
+        "num": "400",
+        "suffix": "+",
+        "label": "Infographics designed"
+      },
+      {
+        "num": "60",
+        "suffix": "%",
+        "label": "Conversion-focused"
+      }
+    ]
+  },
+  "work": {
+    "label": "Selected Work",
+    "title": "The <em>flagship.</em>",
+    "browseLabel": "Or browse by craft",
+    "categories": [
+      {
+        "title": "Storefronts",
+        "desc": "Full Amazon brand stores — architecture, hero design and shoppable navigation."
+      },
+      {
+        "title": "A+ Content",
+        "desc": "Premium detail-page modules and brand stories that elevate the listing and convert."
+      },
+      {
+        "title": "Infographics",
+        "desc": "Benefit, how-to and comparison visuals that make a product instantly understood."
+      }
+    ]
+  },
+  "services": {
+    "label": "What I do",
+    "title": "Services &amp; <em>expertise</em>",
+    "items": [
+      {
+        "title": "Amazon Brand Stores",
+        "desc": "End-to-end storefront design — layout architecture, hero banners, and shoppable navigation built to convert."
+      },
+      {
+        "title": "A+ &amp; Premium Content",
+        "desc": "Modular A+ content and brand story pages that communicate value and elevate the product detail page."
+      },
+      {
+        "title": "Brand Identity",
+        "desc": "Visual systems, logos, and guidelines that give brands a cohesive, premium presence across every touchpoint."
+      },
+      {
+        "title": "Product Mockups",
+        "desc": "Photorealistic mockups and lifestyle compositions that make products feel tangible and desirable."
+      }
+    ]
+  },
+  "contact": {
+    "label": "Let's talk",
+    "title": "Let's build something<br /><em>worth remembering.</em>"
+  },
+  "footer": {
+    "tagline": "Senior Graphic Designer · Amazon Brand Specialist"
+  }
+}

@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+*.log
+
+# Decap local backend working files
+.decap-server/
