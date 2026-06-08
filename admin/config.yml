@@ -11,7 +11,8 @@
 # -----------------------------------------------------------------------------
 
 backend:
-  name: git-gateway
+  name: github
+  repo: max1mvz/jay-portfolio
   branch: main
 
 local_backend: true
