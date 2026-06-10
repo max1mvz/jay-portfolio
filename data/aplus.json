@@ -29,7 +29,10 @@
       "name": "TEST 1",
       "slug": "TEST 1",
       "featured": false,
-      "index": "02 — Brand Story",
+      "case": {
+        "sections": []
+      },
+      "index": "02 — Regular A+",
       "storefrontImage": "/images/Sunjoe.png",
       "tag": "A+ Content",
       "image": "/images/beemo.png",
