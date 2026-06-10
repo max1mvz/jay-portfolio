@@ -256,21 +256,38 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeGallery(); });
   }
 
-  /* ---------- Storefront full-screenshot image (managed in the Storefronts module) ----------
-     A case page tags its showcase img with data-store-img="<slug>" and the wrapper
-     with data-store-show="<slug>"; we look the storefront up in storefronts.json and
-     pull its `storefrontImage`. Shows the wrapper only when an image is set. */
-  function applyStorefrontImages() {
+  /* ---------- Full-screenshot image, managed on a gallery item (Storefronts / A+) ----------
+     A case page tags its showcase img with data-store-img and the wrapper with
+     data-store-show. The value is "<file>:<slug>" (e.g. "aplus:Optiflow"); a bare
+     "<slug>" defaults to the storefronts file. We look the item up in that file's
+     items[] and pull its `storefrontImage` field, showing the wrapper only when set. */
+  function applyItemImages() {
     var nodes = document.querySelectorAll("[data-store-img],[data-store-show]");
     if (!nodes.length) return;
-    getJSON("data/storefronts.json").then(function (d) {
+    function parse(ref) {
+      if (!ref) return null;
+      var i = ref.indexOf(":");
+      return i < 0 ? { file: "storefronts", slug: ref } : { file: ref.slice(0, i), slug: ref.slice(i + 1) };
+    }
+    var need = {};
+    nodes.forEach(function (n) {
+      ["data-store-img", "data-store-show"].forEach(function (a) {
+        var p = parse(n.getAttribute(a)); if (p && FILES[p.file]) need[p.file] = 1;
+      });
+    });
+    var keys = Object.keys(need);
+    Promise.all(keys.map(function (f) {
+      return getJSON(FILES[f]).then(function (d) { return [f, d]; }).catch(function () { return [f, null]; });
+    })).then(function (pairs) {
       var bySlug = {};
-      (d.items || []).forEach(function (it) { bySlug[it.slug] = it; });
+      pairs.forEach(function (pr) {
+        bySlug[pr[0]] = {};
+        var d = pr[1]; if (d && d.items) d.items.forEach(function (it) { bySlug[pr[0]][it.slug] = it; });
+      });
+      function look(ref) { var p = parse(ref); return p ? (bySlug[p.file] || {})[p.slug] : null; }
       nodes.forEach(function (n) {
-        var imgSlug = n.getAttribute("data-store-img");
-        if (imgSlug) { var it = bySlug[imgSlug]; if (it && it.storefrontImage) n.setAttribute("src", it.storefrontImage); }
-        var showSlug = n.getAttribute("data-store-show");
-        if (showSlug) { var it2 = bySlug[showSlug]; n.style.display = (it2 && it2.storefrontImage) ? "" : "none"; }
+        if (n.hasAttribute("data-store-img")) { var it = look(n.getAttribute("data-store-img")); if (it && it.storefrontImage) n.setAttribute("src", it.storefrontImage); }
+        if (n.hasAttribute("data-store-show")) { var it2 = look(n.getAttribute("data-store-show")); n.style.display = (it2 && it2.storefrontImage) ? "" : "none"; }
       });
     }).catch(function (e) { console.error(e); });
   }
@@ -286,7 +303,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     bindCopy();
-    applyStorefrontImages();
+    applyItemImages();
 
     var sf = document.querySelector('[data-render="storefronts"]');
     if (sf) getJSON("data/storefronts.json")
