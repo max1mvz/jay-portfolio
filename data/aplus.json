@@ -22,21 +22,6 @@
       "monogram": "",
       "image": "/images/Optiflow.png",
       "category": "Full-canvas Premium A+ · interactive module breakdown inside"
-    },
-    {
-      "grad1": "#2f4a55",
-      "grad2": "#6fb3c9",
-      "name": "TEST 1",
-      "slug": "TEST 1",
-      "featured": false,
-      "case": {
-        "sections": []
-      },
-      "index": "02 — Regular A+",
-      "storefrontImage": "/images/Sunjoe.png",
-      "tag": "A+ Content",
-      "image": "/images/beemo.png",
-      "category": "Full-canvas Premium A+ · interactive module breakdown inside"
     }
   ]
 }
