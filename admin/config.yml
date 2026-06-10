@@ -140,7 +140,8 @@ collections:
               - { label: "Badge (feature card only)", name: "badge", widget: "string", required: false }
               - { label: "Case study page", name: "page", widget: "string", required: false, hint: "e.g. ease.html — leave blank for a non-clickable tile" }
               - { label: "Live store URL", name: "liveUrl", widget: "string", required: false }
-              - { label: "Cover image", name: "image", widget: "image", required: false }
+              - { label: "Cover image (gallery card thumbnail)", name: "image", widget: "image", required: false }
+              - { label: "Storefront image (full screenshot shown on the case page)", name: "storefrontImage", widget: "image", required: false }
               - { label: "Monogram (used if no image)", name: "monogram", widget: "string", required: false }
               - { label: "Gradient color 1", name: "grad1", widget: "string", required: false, default: "#3a4a6b" }
               - { label: "Gradient color 2", name: "grad2", widget: "string", required: false, default: "#8aa0c8" }
@@ -448,7 +449,6 @@ collections:
             widget: "object"
             collapsed: true
             fields:
-              - { label: "Storefront image (optional — shows on the page)", name: "image", widget: "image", required: false }
               - label: "Back link"
                 name: "nav"
                 widget: "object"
@@ -504,7 +504,6 @@ collections:
             widget: "object"
             collapsed: true
             fields:
-              - { label: "Storefront image (optional — shows on the page)", name: "image", widget: "image", required: false }
               - label: "Back link"
                 name: "nav"
                 widget: "object"

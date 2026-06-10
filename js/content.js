@@ -256,6 +256,25 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeGallery(); });
   }
 
+  /* ---------- Storefront full-screenshot image (managed in the Storefronts module) ----------
+     A case page tags its showcase img with data-store-img="<slug>" and the wrapper
+     with data-store-show="<slug>"; we look the storefront up in storefronts.json and
+     pull its `storefrontImage`. Shows the wrapper only when an image is set. */
+  function applyStorefrontImages() {
+    var nodes = document.querySelectorAll("[data-store-img],[data-store-show]");
+    if (!nodes.length) return;
+    getJSON("data/storefronts.json").then(function (d) {
+      var bySlug = {};
+      (d.items || []).forEach(function (it) { bySlug[it.slug] = it; });
+      nodes.forEach(function (n) {
+        var imgSlug = n.getAttribute("data-store-img");
+        if (imgSlug) { var it = bySlug[imgSlug]; if (it && it.storefrontImage) n.setAttribute("src", it.storefrontImage); }
+        var showSlug = n.getAttribute("data-store-show");
+        if (showSlug) { var it2 = bySlug[showSlug]; n.style.display = (it2 && it2.storefrontImage) ? "" : "none"; }
+      });
+    }).catch(function (e) { console.error(e); });
+  }
+
   /* ---------- Boot: render whatever this page asks for ---------- */
   function fail(container, url) {
     if (container) {
@@ -267,6 +286,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     bindCopy();
+    applyStorefrontImages();
 
     var sf = document.querySelector('[data-render="storefronts"]');
     if (sf) getJSON("data/storefronts.json")
