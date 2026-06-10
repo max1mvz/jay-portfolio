@@ -172,7 +172,7 @@
   function projMarkup(b, i) {
     var no = ("0" + (i + 1)).slice(-2);
     var n = (b.images || []).length;
-    var first = (b.images && b.images[0]) || "";
+    var first = b.cover || (b.images && b.images[0]) || "";
     return '<button class="proj is-in" type="button" data-gallery="' + esc(b.key) +
       '" data-tilt="4" data-cursor>' +
       '<span class="proj__art"' + (first ? ' data-image="' + esc(first) + '"' : "") + "></span>" +

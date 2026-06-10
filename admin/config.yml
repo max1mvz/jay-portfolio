@@ -224,6 +224,7 @@ collections:
             fields:
               - { label: "Key", name: "key", widget: "string", hint: "unique id, e.g. mysalifree" }
               - { label: "Name", name: "name", widget: "string" }
+              - { label: "Cover image (tile thumbnail; defaults to first image below)", name: "cover", widget: "image", required: false }
               - { label: "Tag", name: "tag", widget: "string" }
               - label: "Images"
                 name: "images"
