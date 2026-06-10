@@ -42,6 +42,7 @@
         }
       },
       "index": "test",
+      "storefrontImage": "/images/Sunjoe.png",
       "tag": "A+ Content",
       "image": "/images/dermtheory-2.jpg",
       "category": "test"
