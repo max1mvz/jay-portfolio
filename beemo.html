@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css?v=2" />
-  <link rel="stylesheet" href="css/case.css?v=11" />
+  <link rel="stylesheet" href="css/case.css?v=12" />
 </head>
 <body>
   <div class="bg-mesh" aria-hidden="true">
@@ -49,6 +49,14 @@
     <div class="case-meta__item"><div class="k">Scope</div><div class="v" data-cms="cs:beemo.meta.scope">Storefront</div></div>
     <div class="case-meta__item"><div class="k">Year</div><div class="v" data-cms="cs:beemo.meta.year">2025</div></div>
   </div>
+
+  <!-- Storefront showcase image (optional; shows only when set in the CMS) -->
+  <section class="case-shot" data-cms-show="cs:beemo.image">
+    <div class="case-shot__label reveal"><span>—</span> The storefront</div>
+    <div class="case-shot__frame reveal">
+      <img data-cms-src="cs:beemo.image" alt="Beemo Amazon storefront design" />
+    </div>
+  </section>
 
   <section class="case-section">
     <div class="case-section__label reveal"><span>01</span> — <span data-cms="cs:beemo.brief.label">The brief</span></div>

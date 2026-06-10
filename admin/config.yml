@@ -447,6 +447,7 @@ collections:
             widget: "object"
             collapsed: true
             fields:
+              - { label: "Storefront image (optional — shows on the page)", name: "image", widget: "image", required: false }
               - label: "Back link"
                 name: "nav"
                 widget: "object"
@@ -502,6 +503,7 @@ collections:
             widget: "object"
             collapsed: true
             fields:
+              - { label: "Storefront image (optional — shows on the page)", name: "image", widget: "image", required: false }
               - label: "Back link"
                 name: "nav"
                 widget: "object"

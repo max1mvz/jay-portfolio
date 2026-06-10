@@ -39,7 +39,7 @@
     return path.split(".").reduce(function (o, k) { return o == null ? undefined : o[k]; }, obj);
   }
   function bindCopy() {
-    var CMS_ATTRS = ["data-cms", "data-cms-src", "data-cms-href", "data-cms-title", "data-cms-count", "data-cms-attr"];
+    var CMS_ATTRS = ["data-cms", "data-cms-src", "data-cms-href", "data-cms-title", "data-cms-count", "data-cms-attr", "data-cms-show"];
     var nodes = document.querySelectorAll(CMS_ATTRS.map(function (a) { return "[" + a + "]"; }).join(","));
     if (!nodes.length) return Promise.resolve();
     var fkeys = Object.keys(FILES);
@@ -81,6 +81,8 @@
         }
         var c = n.getAttribute("data-cms-count");
         if (c) { var cv = val(c); if (cv != null) { n.setAttribute("data-count", cv); n.textContent = cv; } }
+        var sw = n.getAttribute("data-cms-show");
+        if (sw) { var swv = val(sw); n.style.display = (swv != null && swv !== "") ? "" : "none"; }
         var at = n.getAttribute("data-cms-attr");
         if (at) { var ci = at.indexOf(":"); var an = at.slice(0, ci); var av = val(at.slice(ci + 1)); if (av != null) n.setAttribute(an, av); }
         var ti = n.getAttribute("data-cms-title");
