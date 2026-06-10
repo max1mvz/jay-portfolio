@@ -142,12 +142,15 @@
   }
 
   /* ---------- Card markup (storefronts / A+ / featured infographic) ---------- */
-  function cardMarkup(it) {
-    var linked = !!it.page;
+  function cardMarkup(it, type) {
+    /* Link to a bespoke page if set, otherwise to the dynamic case template by slug
+       so newly-added items are immediately clickable with no per-item HTML file. */
+    var dest = it.page || (type && it.slug ? "case.html?type=" + type + "&slug=" + encodeURIComponent(it.slug) : "");
+    var linked = !!dest;
     var el = linked ? "a" : "article";
     var cls = "card is-in" + (it.featured ? " card--feature" : "") + (linked ? " card--linked" : "");
     var attrs = ' class="' + cls + '" data-cursor data-tilt="4"';
-    if (linked) attrs += ' href="' + esc(it.page) + '"';
+    if (linked) attrs += ' href="' + esc(dest) + '"';
     if (it.image) attrs += ' data-image="' + esc(it.image) + '"';
     var inner =
       '<span class="card__art" style="background:' + grad(it.grad1, it.grad2) + '"></span>' +
@@ -160,8 +163,8 @@
     return "<" + el + attrs + ">" + inner + "</" + el + ">";
   }
 
-  function renderCards(container, items) {
-    container.innerHTML = (items || []).map(cardMarkup).join("");
+  function renderCards(container, items, type) {
+    container.innerHTML = (items || []).map(function (it) { return cardMarkup(it, type); }).join("");
     container.querySelectorAll(".card[data-image]").forEach(function (card) {
       loadCover(card.querySelector(".card__art"), card.dataset.image, card);
     });
@@ -189,7 +192,7 @@
     if (feature && data.featured) {
       var f = data.featured;
       f.featured = true;
-      feature.innerHTML = cardMarkup(f);
+      feature.innerHTML = cardMarkup(f, "infographics");
       feature.querySelectorAll(".card[data-image]").forEach(function (card) {
         loadCover(card.querySelector(".card__art"), card.dataset.image, card);
       });
@@ -292,6 +295,82 @@
     }).catch(function (e) { console.error(e); });
   }
 
+  /* ---------- Dynamic case study (case.html?type=<file>&slug=<slug>) ----------
+     Renders a full case-study page for ANY gallery item, so newly-added items are
+     clickable with editable, placeholder-filled copy and no per-item HTML file. */
+  function metaItem(k, v) {
+    return '<div class="case-meta__item"><div class="k">' + esc(k) + '</div><div class="v">' + esc(v) + "</div></div>";
+  }
+  function renderDynamicCase() {
+    var root = document.getElementById("caseRoot");
+    if (!root) return;
+    var params = new URLSearchParams(window.location.search);
+    var type = params.get("type"), slug = params.get("slug");
+    var backMap = {
+      storefronts: { href: "storefronts.html", label: "Storefronts", scope: "Storefront" },
+      aplus: { href: "aplus.html", label: "A+ Content", scope: "A+ Content" },
+      infographics: { href: "infographics.html", label: "Infographics", scope: "Infographics" }
+    };
+    var back = backMap[type] || { href: "index.html", label: "Home", scope: "Project" };
+    var backEl = document.getElementById("caseBack"), backLbl = document.getElementById("caseBackLabel");
+    if (backEl) backEl.setAttribute("href", back.href);
+    if (backLbl) backLbl.textContent = back.label;
+
+    function notFound(msg) {
+      root.innerHTML = '<section class="case-hero"><h1 class="case-hero__title reveal is-in">Not found</h1>' +
+        '<p class="case-hero__lead reveal is-in">' + esc(msg) + '</p>' +
+        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" href="' + back.href + '">← ' + esc(back.label) + '</a></div></section>';
+    }
+    if (!FILES[type] || !slug) { notFound("This case study link is missing its type or slug."); return; }
+
+    getJSON(FILES[type]).then(function (d) {
+      var item = (d.items || []).filter(function (it) { return it.slug === slug; })[0];
+      if (!item) { notFound("No “" + slug + "” item exists in " + back.label + " anymore."); return; }
+      document.title = item.name + " — Case Study · Jay Lovete";
+
+      var c = item.case || {};
+      var meta = c.meta || {};
+      var sections = (c.sections && c.sections.length) ? c.sections : [
+        { label: "The brief", heading: "The brief.", p1: "<em>Placeholder —</em> describe the goal of this project. Edit it in the admin under " + back.label + " → " + item.name + " → “Case study page”.", p2: "" },
+        { label: "The idea", heading: "The approach.", p1: "<em>Placeholder —</em> explain the concept and design direction.", p2: "" },
+        { label: "The outcome", heading: "The result.", p1: "<em>Placeholder —</em> add the results once you have them.", p2: "" }
+      ];
+
+      var html = '<section class="case-hero">' +
+        '<p class="case-hero__eyebrow reveal is-in">' + esc(c.eyebrow || item.tag || back.label) + "</p>" +
+        '<h1 class="case-hero__title reveal is-in">' + esc(item.name) + "</h1>" +
+        '<p class="case-hero__lead reveal is-in">' + (c.lead || ("A short overview of " + esc(item.name) + ". Edit this in the admin.")) + "</p>";
+      var actions = "";
+      if (item.liveUrl) actions += '<a class="btn btn--primary" data-cursor target="_blank" rel="noopener" href="' + esc(item.liveUrl) + '">View live ↗</a> ';
+      actions += '<a class="btn btn--ghost" data-cursor href="' + back.href + '">All ' + esc(back.label) + "</a>";
+      html += '<div class="case-hero__actions reveal is-in">' + actions + "</div></section>";
+
+      html += '<div class="case-meta reveal is-in">' +
+        metaItem("Role", meta.role || "Senior Graphic Designer") +
+        metaItem("Client", meta.client || item.name) +
+        metaItem("Scope", meta.scope || back.scope) +
+        metaItem("Year", meta.year || String(new Date().getFullYear())) + "</div>";
+
+      if (item.storefrontImage) {
+        html += '<section class="case-shot"><div class="case-shot__label reveal is-in"><span>—</span> The design</div>' +
+          '<div class="case-shot__frame reveal is-in"><img src="' + esc(item.storefrontImage) + '" alt="' + esc(item.name) + ' design" /></div></section>';
+      }
+
+      sections.forEach(function (s, i) {
+        html += '<section class="case-section"><div class="case-section__label reveal is-in"><span>' +
+          ("0" + (i + 1)).slice(-2) + "</span> — " + esc(s.label || "") + "</div>" +
+          '<div class="case-cols"><h2 class="case-h2 reveal is-in">' + (s.heading || "") + "</h2>" +
+          '<div class="case-body">' +
+          (s.p1 ? '<p class="reveal is-in">' + s.p1 + "</p>" : "") +
+          (s.p2 ? '<p class="reveal is-in">' + s.p2 + "</p>" : "") +
+          "</div></div></section>";
+      });
+
+      root.innerHTML = html;
+      initTilt(root);
+    }).catch(function (e) { console.error(e); notFound("Couldn’t load the content for this case study."); });
+  }
+
   /* ---------- Boot: render whatever this page asks for ---------- */
   function fail(container, url) {
     if (container) {
@@ -304,15 +383,16 @@
   document.addEventListener("DOMContentLoaded", function () {
     bindCopy();
     applyItemImages();
+    renderDynamicCase();
 
     var sf = document.querySelector('[data-render="storefronts"]');
     if (sf) getJSON("data/storefronts.json")
-      .then(function (d) { renderCards(sf, d.items); })
+      .then(function (d) { renderCards(sf, d.items, "storefronts"); })
       .catch(function (e) { console.error(e); fail(sf, "data/storefronts.json"); });
 
     var ap = document.querySelector('[data-render="aplus"]');
     if (ap) getJSON("data/aplus.json")
-      .then(function (d) { renderCards(ap, d.items); })
+      .then(function (d) { renderCards(ap, d.items, "aplus"); })
       .catch(function (e) { console.error(e); fail(ap, "data/aplus.json"); });
 
     if (document.getElementById("projGrid") || document.getElementById("infogFeature")) {

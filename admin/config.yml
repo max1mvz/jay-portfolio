@@ -146,6 +146,33 @@ collections:
               - { label: "Gradient color 1", name: "grad1", widget: "string", required: false, default: "#3a4a6b" }
               - { label: "Gradient color 2", name: "grad2", widget: "string", required: false, default: "#8aa0c8" }
               - { label: "Featured (large card)", name: "featured", widget: "boolean", default: false }
+              - label: "Case study page (for items WITHOUT a hand-built page above)"
+                name: "case"
+                widget: "object"
+                collapsed: true
+                required: false
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false }
+                  - { label: "Intro / lead", name: "lead", widget: "text", required: false }
+                  - label: "Meta (Role / Client / Scope / Year)"
+                    name: "meta"
+                    widget: "object"
+                    required: false
+                    fields:
+                      - { label: "Role", name: "role", widget: "string", required: false }
+                      - { label: "Client", name: "client", widget: "string", required: false }
+                      - { label: "Scope", name: "scope", widget: "string", required: false }
+                      - { label: "Year", name: "year", widget: "string", required: false }
+                  - label: "Sections (brief / idea / outcome …)"
+                    name: "sections"
+                    label_singular: "Section"
+                    widget: "list"
+                    required: false
+                    fields:
+                      - { label: "Label", name: "label", widget: "string" }
+                      - { label: "Heading (HTML allowed)", name: "heading", widget: "string", required: false }
+                      - { label: "Paragraph 1", name: "p1", widget: "text", required: false }
+                      - { label: "Paragraph 2", name: "p2", widget: "text", required: false }
 
   # ------------------------------------------------------------------ A+ Content
   - name: "aplus"
@@ -185,6 +212,33 @@ collections:
               - { label: "Gradient color 1", name: "grad1", widget: "string", required: false, default: "#2f4a55" }
               - { label: "Gradient color 2", name: "grad2", widget: "string", required: false, default: "#6fb3c9" }
               - { label: "Featured (large card)", name: "featured", widget: "boolean", default: false }
+              - label: "Case study page (for items WITHOUT a hand-built page above)"
+                name: "case"
+                widget: "object"
+                collapsed: true
+                required: false
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false }
+                  - { label: "Intro / lead", name: "lead", widget: "text", required: false }
+                  - label: "Meta (Role / Client / Scope / Year)"
+                    name: "meta"
+                    widget: "object"
+                    required: false
+                    fields:
+                      - { label: "Role", name: "role", widget: "string", required: false }
+                      - { label: "Client", name: "client", widget: "string", required: false }
+                      - { label: "Scope", name: "scope", widget: "string", required: false }
+                      - { label: "Year", name: "year", widget: "string", required: false }
+                  - label: "Sections (brief / idea / outcome …)"
+                    name: "sections"
+                    label_singular: "Section"
+                    widget: "list"
+                    required: false
+                    fields:
+                      - { label: "Label", name: "label", widget: "string" }
+                      - { label: "Heading (HTML allowed)", name: "heading", widget: "string", required: false }
+                      - { label: "Paragraph 1", name: "p1", widget: "text", required: false }
+                      - { label: "Paragraph 2", name: "p2", widget: "text", required: false }
 
   # ---------------------------------------------------------------- Infographics
   - name: "infographics"
