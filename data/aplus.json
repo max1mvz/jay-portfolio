@@ -22,6 +22,29 @@
       "monogram": "",
       "image": "/images/Optiflow.png",
       "category": "Full-canvas Premium A+ · interactive module breakdown inside"
+    },
+    {
+      "badge": "test",
+      "grad1": "#2f4a55",
+      "grad2": "#6fb3c9",
+      "name": "test",
+      "slug": "test",
+      "featured": false,
+      "page": "test",
+      "case": {
+        "eyebrow": "test",
+        "lead": "test",
+        "meta": {
+          "role": "test",
+          "client": "test",
+          "scope": "test",
+          "year": "test"
+        }
+      },
+      "index": "test",
+      "tag": "A+ Content",
+      "image": "/images/dermtheory-2.jpg",
+      "category": "test"
     }
   ]
 }
