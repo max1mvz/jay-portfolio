@@ -30,6 +30,7 @@
       "name": "test",
       "slug": "test",
       "featured": false,
+      "page": "",
       "case": {
         "eyebrow": "test",
         "lead": "test",
