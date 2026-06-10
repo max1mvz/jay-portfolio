@@ -143,9 +143,11 @@
 
   /* ---------- Card markup (storefronts / A+ / featured infographic) ---------- */
   function cardMarkup(it, type) {
-    /* Link to a bespoke page if set, otherwise to the dynamic case template by slug
-       so newly-added items are immediately clickable with no per-item HTML file. */
-    var dest = it.page || (type && it.slug ? "case.html?type=" + type + "&slug=" + encodeURIComponent(it.slug) : "");
+    /* Link to a bespoke page only if it's a real .html file; otherwise use the dynamic
+       case template by slug, so newly-added items are clickable no matter what gets
+       typed in the "Case study page" field (and with no per-item HTML file). */
+    var hasPage = it.page && /\.html?(\?|#|$)/i.test(it.page);
+    var dest = hasPage ? it.page : (type && it.slug ? "case.html?type=" + type + "&slug=" + encodeURIComponent(it.slug) : "");
     var linked = !!dest;
     var el = linked ? "a" : "article";
     var cls = "card is-in" + (it.featured ? " card--feature" : "") + (linked ? " card--linked" : "");

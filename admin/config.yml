@@ -138,7 +138,7 @@ collections:
               - { label: "Index label", name: "index", widget: "string", hint: "e.g. 01 — Amazon" }
               - { label: "Tag", name: "tag", widget: "string", default: "Storefront" }
               - { label: "Badge (feature card only)", name: "badge", widget: "string", required: false }
-              - { label: "Case study page", name: "page", widget: "string", required: false, hint: "e.g. ease.html — leave blank for a non-clickable tile" }
+              - { label: "Case study page", name: "page", widget: "string", required: false, hint: "LEAVE BLANK — a page is generated automatically. Only fill this if you hand-built a custom file like ease.html" }
               - { label: "Live store URL", name: "liveUrl", widget: "string", required: false }
               - { label: "Cover image (gallery card thumbnail)", name: "image", widget: "image", required: false }
               - { label: "Storefront image (full screenshot shown on the case page)", name: "storefrontImage", widget: "image", required: false }
@@ -205,7 +205,7 @@ collections:
               - { label: "Index label", name: "index", widget: "string", hint: "e.g. 01 — Brand Story" }
               - { label: "Tag", name: "tag", widget: "string", default: "A+ Content" }
               - { label: "Badge (feature card only)", name: "badge", widget: "string", required: false }
-              - { label: "Case study page", name: "page", widget: "string", required: false, hint: "e.g. optiflow.html — leave blank for a placeholder tile" }
+              - { label: "Case study page", name: "page", widget: "string", required: false, hint: "LEAVE BLANK — a page is generated automatically. Only fill this if you hand-built a custom file like optiflow.html" }
               - { label: "Cover image (gallery card thumbnail)", name: "image", widget: "image", required: false }
               - { label: "A+ image (full screenshot shown on the case page)", name: "storefrontImage", widget: "image", required: false }
               - { label: "Monogram (used if no image)", name: "monogram", widget: "string", required: false }
