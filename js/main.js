@@ -304,7 +304,7 @@
         '<div class="preloader__mark">JL</div>' +
         '<div class="preloader__bar"></div>' +
         '<div class="preloader__count">0%</div>' +
-      '</div>';
+      "</div>";
     document.documentElement.classList.add("is-loading");
     document.body.appendChild(pre);
     const bar = pre.querySelector(".preloader__bar");
