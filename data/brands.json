@@ -11,10 +11,13 @@
           "desc": "tesy",
           "images": [
             "/images/info-1.png",
-            "/images/dermtheory-5.jpg"
+            "/images/dermtheory-5.jpg",
+            "/images/info-5.png",
+            "/images/info-4.png"
           ]
         }
-      ]
+      ],
+      "cover": "/images/dermtheory-4.jpg"
     }
   ],
   "page": {
