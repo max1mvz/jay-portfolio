@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "grad1": "#3a4a6b",
+      "grad2": "#8aa0c8",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "tesy",
+          "heading": "tesy",
+          "desc": "tesy",
+          "images": [
+            "/images/info-1.png",
+            "/images/dermtheory-5.jpg"
+          ]
+        }
+      ]
+    }
+  ],
+  "page": {
+    "label": "tesy",
+    "title": "tesy",
+    "browseLabel": "tesy",
+    "lead": "tesy"
+  }
+}
