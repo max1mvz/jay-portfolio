@@ -4,8 +4,9 @@
   command = ""
 
 # The Reel is the default landing page. Visiting the root ("/") redirects to the
-# cinematic reel; the classic homepage stays reachable at /index.html
-# (linked from the reel as "CLASSIC SITE ↗").
+# cinematic reel; the classic homepage lives at /home.html (renamed from
+# index.html so it no longer collides with "/" and gets caught in a redirect
+# loop). It is linked from the reel as "CLASSIC SITE ↗".
 [[redirects]]
   from = "/"
   to = "/cinema/"

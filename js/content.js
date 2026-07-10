@@ -314,7 +314,7 @@
       aplus: { href: "aplus.html", label: "A+ Content", scope: "A+ Content" },
       infographics: { href: "infographics.html", label: "Infographics", scope: "Infographics" }
     };
-    var back = backMap[type] || { href: "index.html", label: "Home", scope: "Project" };
+    var back = backMap[type] || { href: "home.html", label: "Home", scope: "Project" };
     var backEl = document.getElementById("caseBack"), backLbl = document.getElementById("caseBackLabel");
     if (backEl) backEl.setAttribute("href", back.href);
     if (backLbl) backLbl.textContent = back.label;
@@ -488,7 +488,7 @@
     function notFound(msg) {
       root.innerHTML = '<section class="case-hero"><h1 class="case-hero__title reveal is-in">Not found</h1>' +
         '<p class="case-hero__lead reveal is-in">' + esc(msg) + "</p>" +
-        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" href="index.html#work">← All brands</a></div></section>';
+        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" href="home.html#work">← All brands</a></div></section>';
     }
     if (!key) { notFound("This brand link is missing its key."); return; }
 
@@ -501,7 +501,7 @@
         '<p class="case-hero__eyebrow reveal is-in">' + esc(b.tag || "Brand") + "</p>" +
         '<h1 class="case-hero__title reveal is-in">' + esc(b.name) + "</h1>" +
         (b.lead ? '<p class="case-hero__lead reveal is-in">' + b.lead + "</p>" : "") +
-        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" data-cursor href="index.html#work">All brands</a></div></section>';
+        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" data-cursor href="home.html#work">All brands</a></div></section>';
 
       /* Group the sections so we can control order:
          infographics first (as a lead-image + thumbnail viewer), then
