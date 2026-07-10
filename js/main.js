@@ -9,52 +9,6 @@
   const raf = window.requestAnimationFrame.bind(window);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-  /* ---------- Project data ----------
-     Drop a file named images/<slug>.jpg (or .png) into the project and the card
-     will use it automatically. If the file is missing, the elegant gradient +
-     monogram placeholder shows instead. */
-  const projects = [
-    { name: "Ease Healthcare", slug: "ease", cat: "pH-balanced intimate wellness · full case study inside", monogram: "E", c1: "#3a4a6b", c2: "#8aa0c8", tag: "Case study", page: "ease.html", url: "https://www.amazon.com/stores/Ease/page/91A7CE5A-BD29-4BA9-8320-8B8ACDABF13A?lp_asin=B0BGYCGD4N&ref_=ast_bln", wide: true },
-  ];
-
-  const grid = document.getElementById("workGrid");
-  if (grid) {
-    projects.forEach((p, i) => {
-      const a = document.createElement("a");
-      const dest = p.page || p.url;
-      a.href = dest;
-      a.className = "card" + (p.wide ? " card--wide" : "");
-      a.setAttribute("data-cursor", "");
-      const hasLink = dest && dest !== "#";
-      if (hasLink) {
-        a.classList.add("card--linked");
-        if (!p.page) { a.target = "_blank"; a.rel = "noopener"; }
-      }
-      a.style.transitionDelay = (i % 2) * 0.08 + "s";
-      a.innerHTML = `
-        <span class="card__art" style="background:linear-gradient(135deg, ${p.c1}, ${p.c2})"></span>
-        <span class="card__monogram">${p.monogram}</span>
-        <span class="card__tag">${p.tag}</span>
-        <span class="card__index">0${i + 1} — Amazon</span>
-        <span class="card__name">${p.name}</span>
-        <span class="card__cat">${p.cat}</span>
-        <span class="card__cta">${p.page ? "View case study" : "Visit storefront"} <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></span>`;
-      grid.appendChild(a);
-      const art = a.querySelector(".card__art");
-      const probe = new Image();
-      let triedPng = false;
-      probe.onload = () => {
-        art.style.backgroundImage = `url('${probe.src}')`;
-        art.style.backgroundSize = "cover";
-        art.style.backgroundPosition = "center";
-        a.classList.add("has-img");
-      };
-      probe.onerror = () => {
-        if (!triedPng) { triedPng = true; probe.src = `images/${p.slug}.png`; }
-      };
-      probe.src = `images/${p.slug}.jpg`;
-    });
-  }
 
   /* ---------- Custom cursor ---------- */
   const cursor = document.querySelector(".cursor");
@@ -71,12 +25,12 @@
       raf(loop);
     })();
     document.addEventListener("mouseover", (e) => {
-      const view = e.target.closest(".card, .cat-card");
+      const view = e.target.closest(".card, .cat-card, .brand-card");
       if (view) { cursor.classList.add("is-view"); return; }
       if (e.target.closest("[data-cursor], a, button")) cursor.classList.add("is-hover");
     });
     document.addEventListener("mouseout", (e) => {
-      if (e.target.closest(".card, .cat-card")) cursor.classList.remove("is-view");
+      if (e.target.closest(".card, .cat-card, .brand-card")) cursor.classList.remove("is-view");
       if (e.target.closest("[data-cursor], a, button")) cursor.classList.remove("is-hover");
     });
   }
@@ -141,10 +95,20 @@
   });
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
-      if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+      // Replay: reveal when it enters, hide again when it fully leaves.
+      en.target.classList.toggle("is-in", en.isIntersecting);
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-  document.querySelectorAll(".reveal, .card").forEach((el) => io.observe(el));
+  function observeReveals() {
+    document.querySelectorAll(".reveal, .card, .brand-card").forEach((el) => {
+      if (el.dataset.revObserved) return;
+      el.dataset.revObserved = "1";
+      io.observe(el);
+    });
+  }
+  observeReveals();
+  // Re-scan after content.js injects the brand grid / other dynamic content.
+  document.addEventListener("content:rendered", observeReveals);
 
   /* ---------- Hero kinetic reveal ---------- */
   function revealHero() {
@@ -226,19 +190,52 @@
     notes.forEach((n) => aio.observe(n));
   }
 
-  /* ---------- Hero orb: drift toward cursor ---------- */
-  const vizScene = document.querySelector(".viz__scene");
-  if (vizScene && desktop) {
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    window.addEventListener("mousemove", (e) => {
-      tx = (e.clientX / window.innerWidth - 0.5) * 28;
-      ty = -(e.clientY / window.innerHeight - 0.5) * 22;
+  /* ---------- Hero card accordion ----------
+     Hover expands a card in place (stable). Click pins it AND slides it to the far left. */
+  const deck = document.querySelector(".deck");
+  if (deck) {
+    const accCards = [].slice.call(deck.querySelectorAll(".acc-card"));
+    const motionOK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let locked = false;
+
+    // expand a card where it sits — no reorder, so it stays under the cursor
+    function activate(card) {
+      accCards.forEach((c) => c.classList.remove("is-active"));
+      if (card) card.classList.add("is-active");
+    }
+    // run a layout change (mutate) and smoothly slide cards from old → new positions
+    function flip(mutate) {
+      const firsts = accCards.map((c) => c.getBoundingClientRect().left);
+      mutate();
+      if (!motionOK) return;
+      accCards.forEach((c, i) => {
+        const dx = firsts[i] - c.getBoundingClientRect().left;
+        if (!dx) return;
+        c.style.transition = "none";
+        c.style.transform = "translateX(" + dx + "px)";
+        requestAnimationFrame(() => { c.style.transition = ""; c.style.transform = ""; });
+      });
+    }
+
+    accCards.forEach((card) => {
+      card.addEventListener("mouseenter", () => { if (!locked) activate(card); });
+      card.addEventListener("click", () => {
+        if (locked && card.classList.contains("is-pinned")) {
+          // click the pinned card again → unlock and slide it back into the row
+          locked = false;
+          flip(() => accCards.forEach((c) => c.classList.remove("is-pinned")));
+        } else {
+          // pin this card → slide it to the far left and lock it
+          locked = true;
+          flip(() => {
+            accCards.forEach((c) => { c.classList.remove("is-active"); c.classList.remove("is-pinned"); });
+            card.classList.add("is-active");
+            card.classList.add("is-pinned");
+          });
+        }
+      });
     });
-    (function vloop() {
-      cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
-      vizScene.style.transform = `rotateX(${cy.toFixed(2)}deg) rotateY(${cx.toFixed(2)}deg)`;
-      raf(vloop);
-    })();
+    deck.addEventListener("mouseleave", () => { if (!locked) activate(accCards[0]); });
   }
 
   /* ---------- Animated counters (eased) ---------- */

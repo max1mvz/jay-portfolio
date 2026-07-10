@@ -1,0 +1,248 @@
+{
+  "page": {
+    "label": "Selected Work",
+    "title": "The <em>brands.</em>",
+    "browseLabel": "Browse by brand",
+    "lead": "Each brand brings its storefront, A+ content and infographics together in one place — click through to see the full picture."
+  },
+  "items": [
+    {
+      "key": "dermtheory",
+      "name": "Dermtheory",
+      "tag": "Clinical skincare",
+      "cover": "/images/dermtheory-1.jpg",
+      "grad1": "#5a4a3a",
+      "grad2": "#c9a86a",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Clinical skincare <em>visuals</em>",
+          "desc": "A six-visual set translating clinical skincare claims into clear, trustworthy benefit graphics.",
+          "caseUrl": "dermtheory.html",
+          "images": [
+            "/images/dermtheory-1.jpg",
+            "/images/dermtheory-2.jpg",
+            "/images/dermtheory-3.jpg",
+            "/images/dermtheory-4.jpg",
+            "/images/dermtheory-5.jpg",
+            "/images/dermtheory-6.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "mysalifree",
+      "name": "mySalifree®",
+      "tag": "Organic shower gel",
+      "cover": "/images/info-1.png",
+      "grad1": "#3a5a4a",
+      "grad2": "#8ac9a0",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Product <em>infographics</em>",
+          "desc": "Benefit and how-to visuals for an organic shower gel — clean, natural and easy to scan.",
+          "images": [
+            "/images/info-1.png",
+            "/images/info-2.png",
+            "/images/info-4.png",
+            "/images/info-3.png",
+            "/images/info-6.png",
+            "/images/info-5.png"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "puream",
+      "name": "PURE'AM",
+      "tag": "Skincare",
+      "cover": "/images/puream-1.jpg",
+      "grad1": "#4a3a5a",
+      "grad2": "#a08ac9",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Skincare <em>infographics</em>",
+          "desc": "Benefit and comparison visuals for a skincare line — premium, clean and reassuring.",
+          "images": [
+            "/images/puream-1.jpg",
+            "/images/puream-2.jpg",
+            "/images/puream-3.jpg",
+            "/images/puream-4.jpg",
+            "/images/puream-5.jpg",
+            "/images/puream-6.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "smartsilk",
+      "name": "SmartSilk™",
+      "tag": "Pillow",
+      "cover": "/images/smartsilk-1.jpg",
+      "grad1": "#3a4a5a",
+      "grad2": "#8aa0c9",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Product <em>infographics</em>",
+          "desc": "How-it-works and benefit visuals for a premium pillow — comfort made visible.",
+          "images": [
+            "/images/smartsilk-1.jpg",
+            "/images/smartsilk-2.jpg",
+            "/images/smartsilk-3.jpg",
+            "/images/smartsilk-4.jpg",
+            "/images/smartsilk-5.jpg",
+            "/images/smartsilk-6.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "moonjax",
+      "name": "Moonjax",
+      "tag": "Home, lifestyle & baby",
+      "cover": "/images/moonjax.png",
+      "grad1": "#5a3a4a",
+      "grad2": "#c99ab0",
+      "sections": [
+        {
+          "type": "storefront",
+          "label": "Storefront",
+          "heading": "Amazon brand <em>store</em>",
+          "desc": "A warm, shoppable home & lifestyle storefront with a clear hero and easy navigation.",
+          "image": "images/moonjaxbs.png",
+          "liveUrl": "https://www.amazon.com/stores/Moonjax/page/570FE88F-715C-4BD8-9898-AF6C8E12255B?ref_=ast_bln",
+          "caseUrl": "moonjax.html"
+        },
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Product <em>infographics</em>",
+          "desc": "Baby-teether infographics — safe, friendly visuals that explain the product at a glance.",
+          "images": [
+            "/images/moonjax-1.png",
+            "/images/moonjax-2.png",
+            "/images/moonjax-3.png",
+            "/images/moonjax-4.png",
+            "/images/moonjax-5.png",
+            "/images/moonjax-6.png"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "ease",
+      "name": "Ease Healthcare",
+      "tag": "pH-balanced intimate wellness",
+      "cover": "/images/ease.png",
+      "grad1": "#3a4a6b",
+      "grad2": "#8aa0c8",
+      "sections": [
+        {
+          "type": "storefront",
+          "label": "Storefront",
+          "heading": "Amazon brand <em>store</em>",
+          "desc": "A storefront designed to make a sensitive category feel calm, clinical and trustworthy — architecture, hero design and shoppable navigation.",
+          "image": "images/easebs.png",
+          "liveUrl": "https://www.amazon.com/stores/Ease/page/91A7CE5A-BD29-4BA9-8320-8B8ACDABF13A?lp_asin=B0BGYCGD4N&ref_=ast_bln",
+          "caseUrl": "ease.html"
+        },
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Product <em>infographics</em>",
+          "desc": "Benefit and how-to visuals for the Ease intimate-wellness range — calm, clinical and reassuring.",
+          "images": [
+            "/images/easehealthcare-1.jpg",
+            "/images/easehealthcare-2.jpg",
+            "/images/easehealthcare-3.jpg",
+            "/images/easehealthcare-4.jpg",
+            "/images/easehealthcare-5.jpg",
+            "/images/easehealthcare-6.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "optiflow",
+      "name": "Optiflow",
+      "tag": "Pool filter sand · Amazon brand",
+      "cover": "/images/optiflowcover.jpg",
+      "grad1": "#2f4a55",
+      "grad2": "#6fb3c9",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Product <em>infographics</em>",
+          "desc": "Benefit callouts and how-it-works visuals for the Optiflow pool filter sand range.",
+          "images": [
+            "/images/optiflow_406210_feat1.jpg",
+            "/images/optiflow_406210_feat3.jpg",
+            "/images/optiflow_406210_feat2.jpg",
+            "/images/optiflow_406210_feat4.jpg",
+            "/images/optiflow_406210_feat5.jpg",
+            "/images/optiflow_406210_feat6.jpg"
+          ]
+        },
+        {
+          "type": "aplus",
+          "label": "A+ Content",
+          "heading": "Premium A+ <em>brand story</em>",
+          "desc": "A full-canvas Premium A+ experience — modular detail-page content that communicates value and lifts conversion.",
+          "image": "/images/Optiflow.png",
+          "caseUrl": "optiflow.html"
+        }
+      ]
+    },
+    {
+      "key": "beemo",
+      "name": "Beemo",
+      "tag": "Drinkware & barware",
+      "cover": "/images/beemo.png",
+      "grad1": "#5a523a",
+      "grad2": "#c9bf7f",
+      "sections": [
+        {
+          "type": "storefront",
+          "label": "Storefront",
+          "heading": "Amazon brand <em>store</em>",
+          "desc": "A clean drinkware & barware storefront built to showcase the range and drive add-to-cart.",
+          "image": "images/beemobs.png",
+          "liveUrl": "https://www.amazon.com/stores/Beemo/page/C190251F-0972-41D6-9FF6-C9B2DACD7866?ref_=ast_bln",
+          "caseUrl": "beemo.html"
+        }
+      ]
+    },
+    {
+      "key": "maxpower",
+      "name": "MaxPower",
+      "tag": "Amazon infographics",
+      "cover": "/images/maxpower-1.jpg",
+      "grad1": "#5a3a3a",
+      "grad2": "#c98a8a",
+      "sections": [
+        {
+          "type": "infographics",
+          "label": "Infographics",
+          "heading": "Product <em>infographics</em>",
+          "desc": "A bold six-visual set built to make the product instantly understood.",
+          "images": [
+            "/images/maxpower-1.jpg",
+            "/images/maxpower-2.jpg",
+            "/images/maxpower-3.jpg",
+            "/images/maxpower-4.jpg",
+            "/images/maxpower-5.jpg",
+            "/images/maxpower-6.jpg"
+          ]
+        }
+      ]
+    }
+  ]
+}

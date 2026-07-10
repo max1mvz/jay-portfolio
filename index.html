@@ -3,19 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jay Lovete — Senior Graphic Designer</title>
-  <meta name="description" content="Ernesto 'Jay' Lovete Jr. — Senior Graphic Designer specializing in Amazon brand storefronts, A+ content, and conversion-driven visual design." />
+  <title data-cms="home:seo.title">Jay Lovete — Senior Graphic Designer</title>
+  <meta name="description" data-cms-attr="content:home:seo.description" content="Ernesto 'Jay' Lovete Jr. — Senior Graphic Designer specializing in Amazon brand storefronts, A+ content, and conversion-driven visual design." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <link rel="stylesheet" href="css/styles.css?v=31" />
 </head>
 <body>
   <!-- Background field -->
   <div class="bg-mesh" aria-hidden="true">
-    <span class="orb orb-1"></span>
-    <span class="orb orb-2"></span>
-    <span class="orb orb-3"></span>
+    <canvas class="shader-bg" id="shaderBg"></canvas>
   </div>
   <div class="bg-grid" aria-hidden="true"></div>
   <div class="bg-grain" aria-hidden="true"></div>
@@ -31,14 +29,13 @@
   <header class="nav" id="nav">
     <a href="#top" class="nav__brand" data-cursor>
       <span class="nav__mark">JL</span>
-      <span class="nav__name">Jay&nbsp;Lovete</span>
+      <span class="nav__name" data-cms="site:brand">Jay&nbsp;Lovete</span>
     </a>
     <nav class="nav__links">
-      <a href="storefronts.html" data-cursor>Storefronts</a>
-      <a href="aplus.html" data-cursor>A+ Content</a>
-      <a href="infographics.html" data-cursor>Infographics</a>
-      <a href="#about" data-cursor>About</a>
-      <a href="#contact" class="nav__cta" data-cursor>Let's talk</a>
+      <a href="#work" data-cursor data-cms="home:nav.work">Work</a>
+      <a href="cinema/" data-cursor data-cms="home:nav.reel">The Reel</a>
+      <a href="#about" data-cursor data-cms="home:nav.about">About</a>
+      <a href="#contact" class="nav__cta" data-cursor data-cms="home:nav.cta">Let's talk</a>
     </nav>
     <button class="nav__toggle" id="navToggle" aria-label="Open menu">
       <span></span><span></span>
@@ -47,11 +44,10 @@
 
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="storefronts.html">Storefronts</a>
-    <a href="aplus.html">A+ Content</a>
-    <a href="infographics.html">Infographics</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#work" data-cms="home:nav.work">Work</a>
+    <a href="cinema/" data-cms="home:nav.reel">The Reel</a>
+    <a href="#about" data-cms="home:nav.about">About</a>
+    <a href="#contact" data-cms="home:nav.contactMobile">Contact</a>
   </div>
 
   <main id="top">
@@ -78,34 +74,7 @@
         </div>
       </div>
       <div class="hero__viz" aria-hidden="true">
-        <div class="viz__scene">
-          <div class="viz__globe">
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-            <span class="viz__ring"></span>
-          </div>
-          <div class="viz__words">
-            <span class="viz__word is-fill" style="transform: translate(-50%,-50%) rotateY(0deg) translateZ(200px) translateY(-55px)">Storefronts</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(27.7deg) translateZ(200px) translateY(0px)">A+ Content</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(55.4deg) translateZ(200px) translateY(55px)">Infographics</span>
-            <span class="viz__word is-fill" style="transform: translate(-50%,-50%) rotateY(83.1deg) translateZ(200px) translateY(-55px)">Amazon</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(110.8deg) translateZ(200px) translateY(0px)">Web Design</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(138.5deg) translateZ(200px) translateY(55px)">Web App</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(166.2deg) translateZ(200px) translateY(-55px)">Brand Identity</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(193.8deg) translateZ(200px) translateY(0px)">Mockups</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(221.5deg) translateZ(200px) translateY(55px)">Conversion</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(249.2deg) translateZ(200px) translateY(-55px)">Editorial</span>
-            <span class="viz__word is-fill" style="transform: translate(-50%,-50%) rotateY(276.9deg) translateZ(200px) translateY(0px)">UI/UX</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(304.6deg) translateZ(200px) translateY(55px)">Packaging</span>
-            <span class="viz__word" style="transform: translate(-50%,-50%) rotateY(332.3deg) translateZ(200px) translateY(-55px)">Social</span>
-          </div>
-        </div>
+        <div class="hcols" data-render="columns" id="hcols"></div>
       </div>
 
       <div class="hero__credit reveal" data-cms="home:hero.credit">Ernesto M. Lovete Jr. — Portfolio ’26</div>
@@ -127,17 +96,24 @@
       </div>
     </section>
 
+    <!-- WORK -->
+    <section class="work" id="work">
+      <!-- Browse by brand -->
+      <div class="cat-head reveal"><span data-cms="brands:page.browseLabel">Browse by brand</span></div>
+      <div class="brand-grid" data-render="brands" id="brandGrid"></div>
+    </section>
+
     <!-- ABOUT -->
     <section class="about" id="about">
       <div class="about__label reveal"><span>01</span> — <span data-cms="home:about.label">About</span></div>
       <div class="about__grid">
         <div class="about__lead">
-          <h2 class="about__statement reveal" data-cms="home:about.statement">
+          <h2 class="about__statement reveal reveal--left" data-cms="home:about.statement">
             A graphic designer obsessed with visual content that
             <em>drives engagement</em> and <em>revenue</em> across the Amazon ecosystem.
           </h2>
 
-          <figure class="about__chart reveal" role="img" aria-label="Chart: shopper engagement trending upward after a storefront redesign, from launch to present.">
+          <figure class="about__chart reveal reveal--right" role="img" aria-label="Chart: shopper engagement trending upward after a storefront redesign, from launch to present.">
             <figcaption class="about__chart-head">
               <span class="about__chart-title"><span class="dotmark"></span> <span data-cms="home:about.chartTitle">Engagement after redesign</span></span>
               <span class="about__chart-trend" data-cms="home:about.chartTrend">▲ Trending up</span>
@@ -182,59 +158,24 @@
             marketplace.
           </p>
           <div class="stats">
-            <div class="stat reveal">
+            <div class="stat reveal reveal--scale">
               <span class="stat__num" data-count="50" data-cms-count="home:about.stats.0.num">50</span><span class="stat__plus" data-cms="home:about.stats.0.suffix">+</span>
               <span class="stat__label" data-cms="home:about.stats.0.label">Brand storefronts</span>
             </div>
-            <div class="stat reveal">
+            <div class="stat reveal reveal--scale">
               <span class="stat__num" data-count="100" data-cms-count="home:about.stats.1.num">100</span><span class="stat__plus" data-cms="home:about.stats.1.suffix">+</span>
               <span class="stat__label" data-cms="home:about.stats.1.label">A+ content projects</span>
             </div>
-            <div class="stat reveal">
+            <div class="stat reveal reveal--scale">
               <span class="stat__num" data-count="200" data-cms-count="home:about.stats.2.num">200</span><span class="stat__plus" data-cms="home:about.stats.2.suffix">+</span>
               <span class="stat__label" data-cms="home:about.stats.2.label">Infographics designed</span>
             </div>
-            <div class="stat reveal">
+            <div class="stat reveal reveal--scale">
               <span class="stat__num" data-count="60" data-cms-count="home:about.stats.3.num">60</span><span class="stat__plus" data-cms="home:about.stats.3.suffix">%</span>
               <span class="stat__label" data-cms="home:about.stats.3.label">Conversion-focused</span>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- WORK -->
-    <section class="work" id="work">
-      <div class="work__head">
-        <div class="about__label reveal"><span>02</span> — <span data-cms="home:work.label">Selected Work</span></div>
-        <h2 class="section-title reveal" data-cms="home:work.title">The <em>flagship.</em></h2>
-      </div>
-
-      <div class="work__grid" id="workGrid">
-        <!-- Ease feature card injected by JS -->
-      </div>
-
-      <!-- Browse by category -->
-      <div class="cat-head reveal"><span data-cms="home:work.browseLabel">Or browse by craft</span></div>
-      <div class="cat-grid">
-        <a href="storefronts.html" class="cat-card reveal" data-cursor data-no="01">
-          <span class="cat-card__no">01</span>
-          <h3 class="cat-card__title" data-cms="home:work.categories.0.title">Storefronts</h3>
-          <p class="cat-card__desc" data-cms="home:work.categories.0.desc">Full Amazon brand stores — architecture, hero design and shoppable navigation.</p>
-          <span class="cat-card__go">Explore ↗</span>
-        </a>
-        <a href="aplus.html" class="cat-card reveal" data-cursor data-no="02">
-          <span class="cat-card__no">02</span>
-          <h3 class="cat-card__title" data-cms="home:work.categories.1.title">A+ Content</h3>
-          <p class="cat-card__desc" data-cms="home:work.categories.1.desc">Premium detail-page modules and brand stories that elevate the listing and convert.</p>
-          <span class="cat-card__go">Explore ↗</span>
-        </a>
-        <a href="infographics.html" class="cat-card reveal" data-cursor data-no="03">
-          <span class="cat-card__no">03</span>
-          <h3 class="cat-card__title" data-cms="home:work.categories.2.title">Infographics</h3>
-          <p class="cat-card__desc" data-cms="home:work.categories.2.desc">Benefit, how-to and comparison visuals that make a product instantly understood.</p>
-          <span class="cat-card__go">Explore ↗</span>
-        </a>
       </div>
     </section>
 
@@ -254,25 +195,25 @@
 
     <!-- SERVICES -->
     <section class="services" id="services">
-      <div class="about__label reveal"><span>03</span> — <span data-cms="home:services.label">What I do</span></div>
+      <div class="about__label reveal"><span>02</span> — <span data-cms="home:services.label">What I do</span></div>
       <h2 class="section-title reveal" data-cms="home:services.title">Services &amp; <em>expertise</em></h2>
       <div class="services__list">
-        <article class="service reveal" data-cursor>
+        <article class="service reveal reveal--left" data-cursor>
           <span class="service__no">01</span>
           <h3 data-cms="home:services.items.0.title">Amazon Brand Stores</h3>
           <p data-cms="home:services.items.0.desc">End-to-end storefront design — layout architecture, hero banners, and shoppable navigation built to convert.</p>
         </article>
-        <article class="service reveal" data-cursor>
+        <article class="service reveal reveal--left" data-cursor>
           <span class="service__no">02</span>
           <h3 data-cms="home:services.items.1.title">A+ &amp; Premium Content</h3>
           <p data-cms="home:services.items.1.desc">Modular A+ content and brand story pages that communicate value and elevate the product detail page.</p>
         </article>
-        <article class="service reveal" data-cursor>
+        <article class="service reveal reveal--left" data-cursor>
           <span class="service__no">03</span>
           <h3 data-cms="home:services.items.2.title">Brand Identity</h3>
           <p data-cms="home:services.items.2.desc">Visual systems, logos, and guidelines that give brands a cohesive, premium presence across every touchpoint.</p>
         </article>
-        <article class="service reveal" data-cursor>
+        <article class="service reveal reveal--left" data-cursor>
           <span class="service__no">04</span>
           <h3 data-cms="home:services.items.3.title">Product Mockups</h3>
           <p data-cms="home:services.items.3.desc">Photorealistic mockups and lifestyle compositions that make products feel tangible and desirable.</p>
@@ -284,7 +225,7 @@
 
   <!-- CONTACT — lime block, nav inverts here -->
   <section class="cta" id="contact" data-nav="light">
-    <p class="cta__label reveal">04 — <span data-cms="home:contact.label">Let's talk</span></p>
+    <p class="cta__label reveal">03 — <span data-cms="home:contact.label">Let's talk</span></p>
     <h2 class="cta__title reveal" data-cms="home:contact.title">Let's build something<br /><em>worth remembering.</em></h2>
     <a href="mailto:yahj29@gmail.com" class="cta__mail" data-cursor data-cms="site:email" data-cms-href="site:email|mailto">yahj29@gmail.com</a>
     <div class="cta__row reveal">
@@ -300,7 +241,8 @@
     <a href="#top" data-cursor>Back to top ↑</a>
   </footer>
 
-  <script src="js/content.js?v=4"></script>
-  <script src="js/main.js?v=2"></script>
+  <script src="js/shader-bg.js?v=2"></script>
+  <script src="js/content.js?v=20"></script>
+  <script src="js/main.js?v=11"></script>
 </body>
 </html>

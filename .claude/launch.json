@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "4321"],
       "port": 4321
+    },
+    {
+      "name": "monogram",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["monogram/server.js"],
+      "port": 4707
     }
   ]
 }

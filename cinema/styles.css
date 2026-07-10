@@ -1,0 +1,105 @@
+/* =========================================================
+   Jay Lovete — "The Reel" (scroll-cinematic build)
+   Dark editorial + lime, wrapped around the frame-scrub engine.
+   ========================================================= */
+:root {
+  --ink: #08090c;
+  --bone: #efe9d8;
+  --bone-dim: #9b968b;
+  --accent: #c6ff3d;
+  --accent-ink: #0a0d04;
+  --display: "Bricolage Grotesque", "Inter", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+body { background: var(--ink); color: var(--bone);
+  font-family: "Inter", system-ui, sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); }
+
+/* ---------- Fixed HUD ---------- */
+.hud { position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 28px; font-family: var(--display); font-size: 12px;
+  font-weight: 600; letter-spacing: 0.26em; color: rgba(239,233,216,0.75); }
+.hud-brand .dim { color: var(--accent); margin: 0 2px; }
+.hud-mid { color: rgba(198,255,61,0.8); }
+.hud-right { transition: color .3s; }
+.hud-right:hover { color: var(--accent); }
+
+/* ---------- Scrub sections (engine contract) ---------- */
+.scrub { position: relative; height: 480vh; }
+#track { height: 420vh; }
+#burst { height: 380vh; }
+.sticky { position: sticky; top: 0; height: 100vh; width: 100%;
+  overflow: hidden; display: grid; place-items: center; background: var(--ink); }
+.sticky canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vignette { position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(60% 42% at 50% 50%, rgba(0,0,0,0.45), transparent 72%),
+    radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(0,0,0,0.72) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 24%, transparent 70%, rgba(0,0,0,0.75) 100%); }
+
+.overlay { position: relative; z-index: 10; text-align: center; padding: 0 24px; }
+.reveal-line { position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%); width: max-content; max-width: 92vw;
+  font-family: var(--display); font-weight: 800; letter-spacing: -0.03em;
+  font-size: clamp(2.4rem, 8vw, 7rem); line-height: 1;
+  opacity: 0; text-shadow: 0 6px 60px rgba(0,0,0,0.85); will-change: opacity, transform; }
+
+.scroll-hint { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+  z-index: 12; font-family: var(--display); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.4em; color: rgba(239,233,216,0.6);
+  animation: bob 1.8s ease-in-out infinite; transition: opacity .4s; }
+@keyframes bob { 0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); } }
+
+/* ---------- Reveals ---------- */
+.reveal { opacity: 0; transform: translateY(34px);
+  transition: opacity .9s cubic-bezier(0.22,1,0.36,1), transform .9s cubic-bezier(0.22,1,0.36,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- Statement ---------- */
+.statement { min-height: 92vh; display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(4rem, 14vh, 9rem) clamp(1.4rem, 7vw, 7rem); }
+.kicker { font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--accent); }
+.statement h2 { font-family: var(--display); font-weight: 700; letter-spacing: -0.035em;
+  font-size: clamp(2.4rem, 6.6vw, 5.8rem); line-height: 1.02; max-width: 16ch; margin-top: 1.4rem; }
+.lede { margin-top: 1.8rem; max-width: 52ch; color: var(--bone-dim); line-height: 1.75; }
+
+/* ---------- Stats ---------- */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;
+  padding: clamp(4rem, 12vh, 8rem) clamp(1.4rem, 7vw, 7rem); }
+.stat { border: 1px solid rgba(198,255,61,0.18); border-radius: 18px;
+  padding: 2rem 1.6rem; background: linear-gradient(160deg, #101218, #07080b); }
+.stat-num { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--accent); display: block; line-height: 1; }
+.stat-label { display: block; margin-top: .7rem; font-size: .82rem;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--bone-dim); }
+@media (max-width: 700px) { .stats { grid-template-columns: 1fr; } }
+
+/* ---------- CTA ---------- */
+.cta { background: var(--accent); color: var(--accent-ink); text-align: center;
+  padding: clamp(5rem, 16vh, 10rem) clamp(1.4rem, 6vw, 6rem); }
+.cta-label { font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; }
+.cta h2 { font-family: var(--display); font-weight: 800; letter-spacing: -0.035em;
+  font-size: clamp(2.6rem, 7.5vw, 6.4rem); line-height: 1; margin-top: 1.2rem; }
+.cta h2 em { color: inherit; }
+.cta-mail { display: inline-block; margin-top: 2.2rem; font-family: var(--display);
+  font-weight: 600; font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+  border-bottom: 2px solid var(--accent-ink); }
+.cta-back { display: block; margin-top: 2.6rem; font-size: .85rem; opacity: .75; }
+.cta-back:hover { opacity: 1; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .hud { padding: 14px 16px; font-size: 10px; letter-spacing: 0.18em; }
+  .hud-mid { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint { animation: none; }
+  .reveal { transition: none; opacity: 1; transform: none; }
+}

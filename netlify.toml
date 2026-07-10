@@ -3,8 +3,11 @@
   publish = "."
   command = ""
 
-# Ensure the CMS config is served as YAML in production.
-[[headers]]
-  for = "/admin/config.yml"
-  [headers.values]
-    Content-Type = "text/yaml; charset=utf-8"
+# The Reel is the default landing page. Visiting the root ("/") redirects to the
+# cinematic reel; the classic homepage stays reachable at /index.html
+# (linked from the reel as "CLASSIC SITE ↗").
+[[redirects]]
+  from = "/"
+  to = "/cinema/"
+  status = 302
+  force = true

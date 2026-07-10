@@ -1,15 +1,10 @@
 {
   "name": "jay-lovete-portfolio",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Jay Lovete — graphic designer portfolio (static site + Decap CMS admin).",
+  "description": "Jay Lovete — graphic designer portfolio (static site + Monogram CMS).",
   "scripts": {
     "site": "python -m http.server 4321",
-    "cms": "decap-server",
-    "dev": "npm-run-all --parallel site cms"
-  },
-  "devDependencies": {
-    "decap-server": "^3.1.3",
-    "npm-run-all": "^4.1.5"
+    "cms": "node monogram/server.js"
   }
 }

@@ -8,3 +8,15 @@ Thumbs.db
 
 # Decap local backend working files
 .decap-server/
+
+# Local-only backups (never deploy these publicly)
+removed-files-backup-*.zip
+*.backup.zip
+
+# Dev tooling / agent scaffolding — not part of the published site
+.agents/
+.claude/skills/
+skills-lock.json
+
+# MONOGRAM — local-only CMS. Never deploy publicly (publish = "." would expose it).
+monogram/

@@ -33,7 +33,8 @@
      element (lets you delete e.g. a draft banner from the admin). */
   var FILES = {
     home: "data/home.json", site: "data/site.json", cs: "data/case-studies.json",
-    storefronts: "data/storefronts.json", aplus: "data/aplus.json", infographics: "data/infographics.json"
+    storefronts: "data/storefronts.json", aplus: "data/aplus.json", infographics: "data/infographics.json",
+    brands: "data/brands.json"
   };
   function getPath(obj, path) {
     return path.split(".").reduce(function (o, k) { return o == null ? undefined : o[k]; }, obj);
@@ -373,6 +374,214 @@
     }).catch(function (e) { console.error(e); notFound("Couldn’t load the content for this case study."); });
   }
 
+  /* ---------- Brand grid (home) ----------
+     A simple "image + name" card per brand, linking to brand.html?key=<key>. */
+  function brandCardMarkup(b, i) {
+    var dest = "brand.html?key=" + encodeURIComponent(b.key || "");
+    /* Letter shown on the tile = override, else the brand's first letter. */
+    var letter = (b.monogram || String(b.name || "?").trim().charAt(0) || "?").toUpperCase();
+    var no = ("0" + ((i || 0) + 1)).slice(-2);
+    return '<a class="brand-card reveal reveal--scale" href="' + esc(dest) + '" data-cursor data-tilt="5" data-lift="-4"' +
+      ' style="transition-delay:' + ((i % 4) * 0.06).toFixed(2) + 's">' +
+      '<span class="brand-card__art">' +
+      '<span class="brand-card__mono">' + esc(letter) + "</span>" +
+      (b.cover ? '<img class="brand-card__img" src="' + esc(b.cover) + '" alt="' + esc(b.name) +
+        '" loading="lazy" onerror="this.remove()" />' : "") +
+      '<span class="brand-card__no">' + no + "</span>" +
+      "</span>" +
+      '<span class="brand-card__name">' + esc(b.name) + "</span>" +
+      (b.tag ? '<span class="brand-card__tag">' + esc(b.tag) + "</span>" : "") +
+      "</a>";
+  }
+  function renderBrands(container, items) {
+    container.innerHTML = (items || []).map(brandCardMarkup).join("");
+    initTilt(container);
+    document.dispatchEvent(new CustomEvent("content:rendered"));
+  }
+
+  /* ---------- Hero: vertical drifting image columns (home) ----------
+     Two columns of brand-cover cards drift vertically (opposite directions,
+     different speeds) via CSS. Each column's cards are duplicated so the loop
+     is seamless. Clean, always-alive, no overlap. */
+  function columnCard(src) {
+    return '<div class="hcol__card"><img src="' + esc(src) + '" alt="" onerror="this.remove()" /></div>';
+  }
+  function renderColumns(container, items) {
+    /* Pull the actual infographics images from every brand (not cover thumbnails). */
+    var imgs = [];
+    (items || []).forEach(function (b) {
+      (b.sections || []).forEach(function (s) {
+        if (s.type === "infographics" && s.images) {
+          s.images.forEach(function (src) { if (src) imgs.push(src); });
+        }
+      });
+    });
+    if (!imgs.length) return;
+    var cols = [[], []];
+    imgs.forEach(function (src, i) { cols[i % 2].push(src); });
+    container.innerHTML = cols.map(function (group, ci) {
+      /* duplicate the set so the vertical loop is seamless */
+      var cards = group.map(columnCard).join("");
+      return '<div class="hcol' + (ci === 1 ? " hcol--down" : "") + '">' + cards + cards + "</div>";
+    }).join("");
+    initColumns(container);
+  }
+
+  /* Scroll-reactive drift: a gentle constant baseline drift (opposite
+     directions per column) that speeds up — and can momentarily reverse —
+     with scroll velocity, then eases back. JS drives the transform (overriding
+     the CSS fallback animation); the rAF loop only runs while the hero is in
+     view and the tab is visible. */
+  function initColumns(container) {
+    var cols = [].slice.call(container.querySelectorAll(".hcol"));
+    if (!cols.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; /* static */
+
+    var st = cols.map(function (c, i) {
+      c.style.animation = "none";           /* take over from the CSS drift */
+      var dir = (i % 2 === 0) ? -1 : 1;     /* col 0 up, col 1 down */
+      var h = (c.scrollHeight / 2) || 1;
+      return { el: c, dir: dir, base: 0.22 + i * 0.05, h: h, offset: dir < 0 ? 0 : -h };
+    });
+    var vel = 0, lastY = window.pageYOffset || 0, raf = null, visible = false;
+
+    function frame() {
+      vel *= 0.88;                          /* scroll boost eases out */
+      st.forEach(function (s) {
+        s.offset += s.dir * s.base + s.dir * vel * 0.4;
+        var y = s.offset % s.h; if (y > 0) y -= s.h;
+        s.el.style.transform = "translateY(" + y.toFixed(2) + "px)";
+      });
+      raf = requestAnimationFrame(frame);
+    }
+    function start() { if (!raf) { lastY = window.pageYOffset || 0; raf = requestAnimationFrame(frame); } }
+    function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+    window.addEventListener("scroll", function () {
+      var y = window.pageYOffset || 0;
+      vel += (y - lastY); lastY = y;
+      if (vel > 60) vel = 60; else if (vel < -60) vel = -60;
+    }, { passive: true });
+    window.addEventListener("resize", function () {
+      st.forEach(function (s) { s.h = (s.el.scrollHeight / 2) || 1; });
+    });
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stop(); else if (visible) start();
+    });
+
+    var viz = container.closest(".hero__viz") || container;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) { visible = e.isIntersecting; if (visible && !document.hidden) start(); else stop(); });
+      }, { threshold: 0 }).observe(viz);
+    } else { visible = true; start(); }
+  }
+
+  /* ---------- Brand page (brand.html?key=<key>) ----------
+     One page per brand: each section it has (storefront / A+ / infographics)
+     is rendered in order; infographic images open in the shared lightbox. */
+  function renderBrandPage() {
+    var root = document.getElementById("brandRoot");
+    if (!root) return;
+    var key = new URLSearchParams(window.location.search).get("key");
+
+    function notFound(msg) {
+      root.innerHTML = '<section class="case-hero"><h1 class="case-hero__title reveal is-in">Not found</h1>' +
+        '<p class="case-hero__lead reveal is-in">' + esc(msg) + "</p>" +
+        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" href="index.html#work">← All brands</a></div></section>';
+    }
+    if (!key) { notFound("This brand link is missing its key."); return; }
+
+    getJSON(FILES.brands).then(function (d) {
+      var b = (d.items || []).filter(function (it) { return it.key === key; })[0];
+      if (!b) { notFound("No “" + key + "” brand exists anymore."); return; }
+      document.title = b.name + " — Jay Lovete";
+
+      var html = '<section class="case-hero">' +
+        '<p class="case-hero__eyebrow reveal is-in">' + esc(b.tag || "Brand") + "</p>" +
+        '<h1 class="case-hero__title reveal is-in">' + esc(b.name) + "</h1>" +
+        (b.lead ? '<p class="case-hero__lead reveal is-in">' + b.lead + "</p>" : "") +
+        '<div class="case-hero__actions reveal is-in"><a class="btn btn--ghost" data-cursor href="index.html#work">All brands</a></div></section>';
+
+      /* Group the sections so we can control order:
+         infographics first (as a lead-image + thumbnail viewer), then
+         A+ and Storefront sitting side by side. */
+      var groups = { info: [], aplus: [], store: [] };
+      (b.sections || []).forEach(function (s) {
+        if (s.type === "infographics") groups.info.push(s);
+        else if (s.type === "aplus") groups.aplus.push(s);
+        else groups.store.push(s);
+      });
+
+      var n = 0;
+      function nextNo() { n += 1; return ("0" + n).slice(-2); }
+      function actionsMarkup(s) {
+        var a = "";
+        if (s.liveUrl) a += '<a class="btn btn--primary" data-cursor target="_blank" rel="noopener" href="' + esc(s.liveUrl) + '">View live ↗</a> ';
+        return a;
+      }
+
+      /* --- Infographics: big lead image (left) + description and a
+             thumbnail strip (right). Thumb click swaps the lead image. --- */
+      groups.info.forEach(function (s) {
+        var no = nextNo();
+        var imgs = s.images || [];
+        var actions = actionsMarkup(s);
+        html += '<section class="case-section binfo reveal is-in"><div class="binfo__grid">' +
+          '<div class="binfo__stage">' +
+          (imgs[0] ? '<img class="binfo__lead" src="' + esc(imgs[0]) + '" alt="' + esc(b.name) + ' infographic" />' : "") +
+          "</div>" +
+          '<div class="binfo__panel">' +
+          '<div class="case-section__label"><span>' + no + "</span> — " + esc(s.label || "Infographics") + "</div>" +
+          '<h2 class="case-h2">' + (s.heading || esc(s.label || "Infographics")) + "</h2>" +
+          (s.desc ? '<p class="binfo__desc">' + esc(s.desc) + "</p>" : "") +
+          (actions ? '<div class="case-hero__actions" style="margin-top:1.4rem">' + actions + "</div>" : "") +
+          '<div class="binfo__strip">' + imgs.map(function (src, k) {
+            return '<button class="brand-thumb binfo__thumb' + (k === 0 ? " is-active" : "") + '" type="button" data-cursor data-k="' + k + '">' +
+              '<img src="' + esc(src) + '" alt="' + esc(b.name) + ' visual ' + (k + 1) + '" loading="lazy" /></button>';
+          }).join("") + "</div>" +
+          "</div></div></section>";
+      });
+
+      /* --- A+ and Storefront side by side --- */
+      function blockMarkup(s) {
+        var no = nextNo();
+        var actions = actionsMarkup(s);
+        return '<section class="brand-block reveal is-in">' +
+          '<div class="case-section__label"><span>' + no + "</span> — " + esc(s.label || "") + "</div>" +
+          '<h2 class="case-h2">' + (s.heading || esc(s.label || "")) + "</h2>" +
+          (s.desc ? '<p class="brand-block__desc">' + esc(s.desc) + "</p>" : "") +
+          (actions ? '<div class="case-hero__actions" style="margin-top:1.3rem">' + actions + "</div>" : "") +
+          (s.image ? '<div class="case-shot__frame brand-block__shot"><img src="' + esc(s.image) + '" alt="' + esc(b.name + " " + (s.label || "")) + '" /></div>' : "") +
+          "</section>";
+      }
+      var pair = groups.aplus.concat(groups.store);
+      if (pair.length) html += '<div class="brand-pair">' + pair.map(blockMarkup).join("") + "</div>";
+
+      root.innerHTML = html;
+      initTilt(root);
+      wireBrandInfographics(root);
+    }).catch(function (e) { console.error(e); notFound("Couldn’t load this brand’s content."); });
+  }
+
+  /* Infographics viewer: clicking a thumbnail swaps the big lead image. */
+  function wireBrandInfographics(root) {
+    [].slice.call(root.querySelectorAll(".binfo")).forEach(function (sec) {
+      var lead = sec.querySelector(".binfo__lead");
+      var thumbs = [].slice.call(sec.querySelectorAll(".binfo__thumb"));
+      thumbs.forEach(function (t) {
+        t.addEventListener("click", function (e) {
+          e.preventDefault();
+          var im = t.querySelector("img");
+          var src = im ? im.getAttribute("src") : "";
+          if (lead && src) lead.setAttribute("src", src);
+          thumbs.forEach(function (o) { o.classList.remove("is-active"); });
+          t.classList.add("is-active");
+        });
+      });
+    });
+  }
+
   /* ---------- Boot: render whatever this page asks for ---------- */
   function fail(container, url) {
     if (container) {
@@ -386,6 +595,16 @@
     bindCopy();
     applyItemImages();
     renderDynamicCase();
+    renderBrandPage();
+
+    var bg = document.querySelector('[data-render="brands"]');
+    var cols = document.querySelector('[data-render="columns"]');
+    if (bg || cols) getJSON("data/brands.json")
+      .then(function (d) {
+        if (bg) renderBrands(bg, d.items);
+        if (cols) renderColumns(cols, d.items);
+      })
+      .catch(function (e) { console.error(e); if (bg) fail(bg, "data/brands.json"); });
 
     var sf = document.querySelector('[data-render="storefronts"]');
     if (sf) getJSON("data/storefronts.json")

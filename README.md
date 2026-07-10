@@ -1,113 +1,69 @@
 # Jay Lovete — Portfolio Website
 
-An elegant, minimalist, animated portfolio for **Ernesto "Jay" Lovete Jr.**,
+An elegant, animated portfolio for **Ernesto "Jay" Lovete Jr.**,
 Senior Graphic Designer (Amazon brand specialist).
 
-Dark editorial aesthetic · kinetic serif typography · glassmorphism · scroll
-animations · custom cursor · fully responsive.
+Dark editorial aesthetic · WebGL "undertones" shader background · scroll-snap
+navigation with replay reveals · brand-based portfolio · cinematic scroll pages ·
+fully responsive.
 
 ## Files
 
 ```
-index.html          — homepage structure & copy
-storefronts.html / aplus.html / infographics.html — gallery pages (render from data/)
-ease.html, optiflow.html, dermtheory.html, …      — case-study pages
-data/*.json         — editable content (storefronts, A+, infographics, site/contact)
-admin/              — Decap CMS admin (index.html + config.yml)
-js/content.js       — renders the gallery pages from data/*.json
-js/main.js          — interactions + homepage flagship card
-css/styles.css      — all styling, colors, animations
-css/case.css        — case-study + gallery page styling
+index.html          — homepage (hero + browse-by-brand grid + about/services/contact)
+brand.html          — per-brand page (?key=…): infographics viewer + A+/storefront
+cinematic.html      — Three.js cinematic scroll experience
+cinema/             — "The Reel": frame-scrubbed cinematic site (scroll-cinematic build)
+monogram/           — MONOGRAM, the official CMS (see below)
+data/*.json         — all editable content (brands, home copy, site/contact)
+images/             — media library
+js/content.js       — data-driven rendering (brand grid, brand pages, hero columns)
+js/main.js          — interactions, reveals, cursor, nav
+js/shader-bg.js     — animated WebGL background
+css/styles.css      — main styling · css/case.css — brand/case pages · css/cinematic.css
 ```
+
+Legacy craft pages (`storefronts.html`, `aplus.html`, `infographics.html`,
+`ease.html`, …) still exist but are no longer linked from the nav.
 
 ## Run it locally
 
-Any static server works. From this folder:
+```powershell
+.\start-website.bat        # or: python -m http.server 4321
+```
+Open **http://localhost:4321**
+
+## Edit content — MONOGRAM (the official CMS)
+
+All content is edited through **Monogram**, a zero-dependency self-hosted CMS
+built for this portfolio (`monogram/`).
 
 ```powershell
-python -m http.server 4321
+cd monogram
+node server.js             # or double-click monogram\Launch Monogram.bat
 ```
+Open **http://localhost:4707** — edits autosave straight into `data/*.json`
+and are live on the site immediately (refresh to see them).
 
-Then open http://localhost:4321
+| Admin section    | Edits                                   |
+|------------------|-----------------------------------------|
+| Brands           | Portfolio grid + each brand's Storefront / A+ / Infographics sections |
+| Home page        | SEO, nav labels, hero, about + stats, services, contact, footer |
+| Site & contact   | Name, email, phone, socials              |
+| Media            | `images/` — drag-and-drop upload         |
 
-## Edit content in the admin (no code)
-
-Storefronts, A+ Content, Infographics, and your site/contact info are now
-**data-driven** — the pages render from `data/*.json`, and you edit those through a
-visual admin (Decap CMS) with add/edit/delete and image upload.
-
-### Run the admin locally
-
-```powershell
-npm install            # first time only — installs the local CMS proxy
-.\start-admin.bat      # starts the site + CMS, opens http://localhost:4321/admin/
-```
-
-Or manually, in two terminals:
-
-```powershell
-npx decap-server        # CMS proxy on http://localhost:8081
-python -m http.server 4321
-```
-
-Then open **http://localhost:4321/admin/** and click **Login** (the local backend
-needs no account). Changes are written straight to the JSON files in `data/` and
-images into `images/`.
-
-### What you can edit
-Essentially **all copy on the site**:
-- **Site & Contact** → `data/site.json`
-- **Home Page** → `data/home.json` (hero, about + stats, work + category cards, services, contact, footer)
-- **Storefronts** → `data/storefronts.json` (page hero + add/edit/delete cards, covers, links)
-- **A+ Content** → `data/aplus.json` (page hero/banner + projects)
-- **Infographics** → `data/infographics.json` (page hero/banner, featured card + brand galleries; add more images per brand)
-- **Case Studies** → `data/case-studies.json` (ease/optiflow/dermtheory/moonjax/beemo — back link, draft banner, hero + buttons, meta, brief/idea/outcome copy, and anatomy notes & images)
-
-How it works: pages keep their HTML/animations; elements tagged `data-cms="file:path"`
-are filled from JSON by `js/content.js` on load. Clearing a field empties/hides it
-(e.g. delete a draft banner, or a case study's "View live" button).
-
-> Not yet in the CMS: the homepage flagship work card (still from `js/main.js`),
-> decorative marquees, and *creating a brand-new* case-study page (editing existing
-> ones is fully supported).
-
-### Going live later
-This repo is Git-ready. Push to GitHub, deploy on **Netlify**, and enable
-**Identity + Git Gateway** — the same `/admin/` then works on the live site with a
-login, and every save becomes a commit that auto-deploys. (The `backend:
-git-gateway` block in `admin/config.yml` is already set for this; `local_backend`
-is ignored in production.)
-
-## Customize (advanced / by hand)
-
-### Swap in your real project images
-Open `js/main.js` and find the `projects` array near the top. Each project
-currently uses a colored gradient + monogram placeholder. To use a real
-screenshot, add an `img` and update the card markup:
-
-1. Drop your image in a new `images/` folder (e.g. `images/dermtheory.jpg`).
-2. In the project object, change the `card__art` line to use your image, e.g.
-   replace the gradient `<span class="card__art" style="...">` with
-   `<span class="card__art" style="background-image:url('images/dermtheory.jpg');background-size:cover;background-position:center"></span>`
-   and remove the `card__monogram` line for that card.
-3. Set the project's `url` to its live Amazon storefront link so the card clicks through.
-
-### Edit text
-All copy (bio, stats, services, contact) lives in `index.html` — edit directly.
-
-### Change colors
-Top of `css/styles.css`, the `:root` block. `--accent` is the bronze; `--ink`
-is the background; `--bone` is the text.
+Safety: Monogram snapshots all data files to `monogram/backups/` on every start
+and keeps a last-known-good copy before every save.
 
 ## Publish (free options)
 
-- **Netlify / Vercel:** drag-and-drop this folder, or connect a repo.
-- **GitHub Pages:** push to a repo, enable Pages on the `main` branch.
-- **Cloudflare Pages:** connect repo or direct upload.
+- **Netlify / Vercel / Cloudflare Pages:** drag-and-drop this folder or connect the repo.
+- **GitHub Pages:** push and enable Pages.
 
-No build step is required — it's plain HTML/CSS/JS.
+No build step — plain HTML/CSS/JS. (Monogram is a local editing tool; don't
+deploy `monogram/` publicly without adding a password gate.)
 
-## Accessibility & performance notes
-- Respects `prefers-reduced-motion` (animations disable for users who request it).
-- Custom cursor and parallax are desktop-only; touch devices get native cursor.
-- Fonts loaded from Google Fonts; everything else is self-contained.
+## Accessibility & performance
+- Respects `prefers-reduced-motion` everywhere (snap, reveals, shader, carousels).
+- Custom cursor and heavy effects are desktop-only.
+- Animated background pauses when the tab is hidden.

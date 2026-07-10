@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jay Lovete — The Reel</title>
+  <meta name="description" content="A scroll-scrubbed cinematic pass through the work of Jay Lovete — Amazon storefronts, A+ content and infographics." />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+
+  <!-- Fixed chrome -->
+  <nav class="hud">
+    <span class="hud-brand">JAY<span class="dim">/</span>LOVETE</span>
+    <span class="hud-mid">SELECTED WORK · THE REEL</span>
+    <a class="hud-right" href="../index.html">CLASSIC SITE ↗</a>
+  </nav>
+
+  <!-- ============ SCRUB 1 — dolly-in on the wall of work ============ -->
+  <section class="scrub" id="dive">
+    <div class="sticky">
+      <canvas></canvas>
+      <div class="vignette"></div>
+      <div class="overlay">
+        <h1 class="reveal-line" data-in="0.00" data-out="0.30">The work <em>speaks.</em></h1>
+        <h1 class="reveal-line" data-in="0.36" data-out="0.64">400+ visuals <em>shipped.</em></h1>
+        <h1 class="reveal-line" data-in="0.72" data-out="1.00">Design that <em>converts.</em></h1>
+      </div>
+      <div class="scroll-hint">SCROLL ▾</div>
+    </div>
+  </section>
+
+  <!-- ============ STATEMENT ============ -->
+  <section class="statement">
+    <p class="kicker reveal">Ernesto “Jay” Lovete Jr. — Senior Graphic Designer</p>
+    <h2 class="reveal">Every pixel is an argument to <em>buy</em>.</h2>
+    <p class="lede reveal">Amazon storefronts, Premium A+ modules and product infographics —
+      one visual system per brand, built to turn browsers into buyers.</p>
+  </section>
+
+  <!-- ============ SCRUB 2 — tracking shot across the wall ============ -->
+  <section class="scrub" id="track">
+    <div class="sticky">
+      <canvas></canvas>
+      <div class="vignette"></div>
+      <div class="overlay">
+        <h1 class="reveal-line" data-in="0.00" data-out="0.42">Storefronts. A+.<br /><em>Infographics.</em></h1>
+        <h1 class="reveal-line" data-in="0.55" data-out="1.00">One designer.<br /><em>Every frame.</em></h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCRUB 3 — the palette burst (procedural) ============ -->
+  <section class="scrub" id="burst">
+    <div class="sticky">
+      <canvas></canvas>
+      <div class="overlay">
+        <h1 class="reveal-line" data-in="0.04" data-out="0.40">Every brand gets<br /><em>a palette.</em></h1>
+        <h1 class="reveal-line" data-in="0.50" data-out="0.96">Color, under<br /><em>control.</em></h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats">
+    <div class="stat reveal"><span class="stat-num" data-count="50" data-suffix="+">0</span><span class="stat-label">Brand storefronts</span></div>
+    <div class="stat reveal"><span class="stat-num" data-count="300" data-suffix="+">0</span><span class="stat-label">A+ content projects</span></div>
+    <div class="stat reveal"><span class="stat-num" data-count="400" data-suffix="+">0</span><span class="stat-label">Infographics designed</span></div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta">
+    <p class="cta-label reveal">Let's talk</p>
+    <h2 class="reveal">Your brand, <em>scene two.</em></h2>
+    <a class="cta-mail reveal" href="mailto:yahj29@gmail.com">yahj29@gmail.com</a>
+    <a class="cta-back reveal" href="../index.html">← Browse the full portfolio</a>
+  </section>
+
+  <!-- Scenes are LIVE-rendered from ../data/reel.json (edit in Monogram → Reel) -->
+  <script src="reel-scenes.js?v=1"></script>
+  <script src="https://unpkg.com/lenis@1.3.21/dist/lenis.min.js"></script>
+  <script src="scroll-cinematic.js?v=2"></script>
+  <script src="burst.js?v=2"></script>
+</body>
+</html>

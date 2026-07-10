@@ -1,4 +1,15 @@
 {
+  "seo": {
+    "title": "Jay Lovete — Senior Graphic Designer",
+    "description": "Ernesto 'Jay' Lovete Jr. — Senior Graphic Designer specializing in Amazon brand storefronts, A+ content, and conversion-driven visual design."
+  },
+  "nav": {
+    "work": "Work",
+    "reel": "The Reel",
+    "about": "About",
+    "cta": "Let's talk",
+    "contactMobile": "Contact"
+  },
   "hero": {
     "eyebrow": "Senior Graphic Designer · Amazon Brand Specialist",
     "titleLines": [
@@ -36,25 +47,6 @@
         "num": "60",
         "suffix": "%",
         "label": "Conversion-focused"
-      }
-    ]
-  },
-  "work": {
-    "label": "Selected Work",
-    "title": "The <em>flagship.</em>",
-    "browseLabel": "Or browse by craft",
-    "categories": [
-      {
-        "title": "Storefronts",
-        "desc": "Full Amazon brand stores — architecture, hero design and shoppable navigation."
-      },
-      {
-        "title": "A+ Content",
-        "desc": "Premium detail-page modules and brand stories that elevate the listing and convert."
-      },
-      {
-        "title": "Infographics",
-        "desc": "Benefit, how-to and comparison visuals that make a product instantly understood."
       }
     ]
   },
